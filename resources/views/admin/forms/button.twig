@@ -1,0 +1,45 @@
+{% macro button_save(options) %}
+    <button type="button" onclick="$('#{{ options.id_form | default('formDataGrid') }}').submit()"
+            class="{{ options.button_class | default('btn btn-primary btn-sm') }}">
+        <i class="{{ options.icon_class|default('fa fa-save') }}" aria-hidden="true"></i>
+        {{ options.button_name|default('Cập nhật') }}
+    </button>
+{% endmacro %}
+
+{% macro button_preview(options) %}
+    <a href="{{ options.link }}" class="{{ options.button_class|default('btn-primary btn btn-sm') }}" target="_blank">
+        <i class="{{ options.icon_class|default('fas fa-eye mr-1') }}" aria-hidden="true"></i>
+        {{ options.button_name|default('Xem trước') }}
+    </a>
+{% endmacro %}
+
+{% macro button_create(options) %}
+    <a href="{{ options.link }}" class="{{ options.button_class|default('btn-info btn btn-sm') }}">
+        <i class="{{ options.icon_class|default('fa fa-plus-circle mr-1') }}" aria-hidden="true"></i>
+        {{ options.button_name|default('Thêm mới') }}
+    </a>
+{% endmacro %}
+
+{% macro button_back(options) %}
+    <a href="{{ options.link ? options.link : route('home_admin') }}"
+       class="{{ options.button_class|default('bg-gray-dark btn btn-sm') }}">
+        <i class="{{ options.icon_class|default('fas fa-undo') }}" aria-hidden="true"></i>
+        {{ options.button_name|default('Cancel') }}
+    </a>
+{% endmacro %}
+
+{% macro button_delete(options) %}
+    <a href="{{ options.link }}" class="{{ options.button_class|default('bg-maroon btn btn-sm') }}">
+        <i class="{{ options.icon_class|default('fa fa-trash') }}" aria-hidden="true"></i>
+        {{ options.button_name|default('Xóa') }}
+    </a>
+{% endmacro %}
+
+{% macro button_delete_checkbox(options) %}
+    <button type="button" class="{{ options.button_class|default('btn btn-sm bg-maroon MassiveRemoveRecords') }}"
+            data-checker=".checker"
+            data-url="{{ options.link }}">
+        <i class="{{ options.icon_class|default('fa fa-trash mr-1') }}" aria-hidden="true"></i>
+        {{ options.button_name|default('Xóa') }}
+    </button>
+{% endmacro %}

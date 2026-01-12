@@ -1,0 +1,98 @@
+.breadcrumb {
+  margin-bottom: 0;
+  color: $primary;
+  text-transform: uppercase;
+
+  &-item {
+    &,
+    & + &::before,
+    &.active,
+    &.active::before,
+    a,
+    a:hover {
+      color: inherit;
+    }
+
+    & + &::before {
+      content: '\f105';
+      font-family: 'Font Awesome 5 Pro';
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    font-size: 14px;
+  }
+}
+
+.pagination {
+  margin-bottom: 0;
+
+  .page-item {
+    &:not(:last-child) {
+      margin-right: 4px;
+    }
+  }
+
+  .page-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    color: $gray-800;
+    padding: 0;
+    border-radius: 4px;
+    border: 0;
+    background-color: $gray-light;
+    color: $gray;
+    font-weight: 600;
+  }
+
+  .page-item.active .page-link {
+    background-color: $danger;
+  }
+
+  @include media-breakpoint-down(lg) {
+    .page-link {
+      width: 36px;
+      height: 36px;
+      font-size: 14px;
+    }
+  }
+}
+
+.search {
+  padding: 16px 20px;
+  border-top: 1px solid #aaa;
+  background-color: $light;
+
+  .form-control {
+    border-right: 0;
+
+    &:focus {
+      box-shadow: unset;
+    }
+  }
+
+  .form-control:focus ~ .input-group-text {
+    border-color: $input-focus-border-color;
+  }
+
+  @include media-breakpoint-up(xl) {
+    display: none;
+    width: 100%;
+    border: 0;
+    padding: 10px 12px;
+    border-radius: 0 0 4px 4px;
+    position: absolute;
+    z-index: 10;
+    top: 100%;
+    right: 50%;
+    transform: translateX(50%);
+
+    .form-control {
+      height: 40px;
+      padding-left: 20px;
+    }
+  }
+}

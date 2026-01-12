@@ -1,0 +1,74 @@
+{% extends "admin.index" %}
+
+{% block title %}Cấu hình chung{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Cấu hình chung</li>
+{% endblock %}
+
+{% import "admin.forms.input" as formview %}
+{% import "admin.forms.button" as button %}
+
+{% block content %}
+
+    <script src="{{ asset('js/ckfinder/ckfinder.js') }}"></script>
+    <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('backend_assets/js/globals.js') }}"></script>
+    <script>CKFinder.config({connectorPath: '/ckfinder/connector'});</script>
+
+    <hr class="mt-0">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right mb-3">
+                        <a href="{{ route('admin_clear_cache') }}" class="btn btn-warning btn-sm ml-1 text-white">
+                            <i class="fas fa-eraser"></i>
+                            Xóa cache
+                        </a>
+
+                    </div>
+                    <div class="float-right mb-3">
+                        {{ button.button_save() }}
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary">
+                <form action="{{ route('admin_setting_save') }}" method="post" enctype="multipart/form-data"
+                      class="form-horizontal" id="formDataGrid">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+
+                        {{ formview.input({'label': 'Tên site','name': 'settings[site_name]','value': settings.site_name}) }}
+
+                        {{ formview.upload({'label': 'Logo','id': 'setting_logo','name': 'settings[logo]',
+                            'id_preview': 'setting_logo_preview','id_input_image': 'setting_logo_input','value': settings.logo
+                        }) }}
+                        {{ formview.upload({'label': 'Favicon','id': 'setting_favicon','name': 'settings[favicon]',
+                            'id_preview': 'setting_favicon_preview','id_input_image': 'setting_favicon_input','value': settings.favicon
+                        }) }}
+                        {{ formview.button_switch({'label': 'Chặn index','name': 'settings[noindex]','value': settings.noindex|default(0) , 'id': 'noindex'}) }}
+                        {{ formview.input({'label': 'Slogen','name': 'settings[slogen]','value': settings.slogen, 'placeholder': 'OUR PASSION IS<br/><strong>BRINGING BRANDS TO LIFE</strong>'}) }}
+                        {{ formview.input({'label': 'Tên công ty','name': 'settings[company_name]','value': settings.company_name}) }}
+                        {{ formview.input({'label': 'Hotline','name': 'settings[hotline]','value': settings.hotline}) }}
+{#                        {{ formview.input({'label': 'Phone','name': 'settings[phone]','value': settings.phone}) }}#}
+                        {{ formview.input({'label': 'Email','name': 'settings[email]','value': settings.email}) }}
+                        {{ formview.input({'label': 'Copy right','name': 'settings[copyright]','value': settings.copyright}) }}
+                        {{ formview.input({'label': 'Link Hố sơ năng lực','name': 'settings[url_company_profile]','value': settings.url_company_profile}) }}
+                        {{ formview.input({'label': 'Address 1','name': 'settings[address_1]','value': settings.address_1}) }}
+                        {{ formview.textarea({'label': 'Google Maps 1','name': 'settings[google_map_1]','value': settings.google_map_1}) }}
+                        {{ formview.input({'label': 'Address 2','name': 'settings[address_2]','value': settings.address_2}) }}
+                        {{ formview.textarea({'label': 'Google Maps 2','name': 'settings[google_map_2]','value': settings.google_map_2}) }}
+{#                        {{ formview.textarea({'label': 'Thông tin chân trang','name': 'settings[footer_info]','value': settings.footer_info,'id': 'footer_info','editor': true}) }}#}
+                        {{ formview.textarea({'label': 'Thông tin trang liên hệ','name': 'settings[contact_info]','value': settings.contact_info,'id': 'contact_info','editor': true}) }}
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

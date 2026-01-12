@@ -1,0 +1,59 @@
+{% set button_create_route          = object.create_route %}
+{% set button_delete_checkbox_route = object.delete_checkbox_route %}
+{% set button_save_data_index_route = object.save_data_index_route %}
+
+
+{% extends "admin.index" %}
+
+
+
+{% block title %}Danh sách {{ object.title }} 
+    
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Quản lý {{ object.title }}</li>
+{% endblock %}
+
+{% import "admin.forms.button" as button %}
+
+{% block content %}
+
+    <hr class="mt-0">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right mb-3">
+                        {{ button.button_save() }}
+                        
+                         
+                         {{ button.button_create({'link': route(button_create_route  )}) }}
+                        {% if filter.state != 2 %}
+                            {{ button.button_delete_checkbox({'link': route(button_delete_checkbox_route )}) }}
+                        {% endif %}    
+
+
+                        {{ button.button_back() }}
+                    </div>
+                </div>
+            </div>
+
+            <form method="post" action="{{ route(button_save_data_index_route) }}" id="formDataGrid"> 
+                {{ csrf_field() }}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body table-responsive p-0">
+                                {{ dataGrid|raw }}
+                            </div>
+                        </div>
+                        {{ index_data_list.links()|raw }}
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    </section>
+
+{% endblock %}

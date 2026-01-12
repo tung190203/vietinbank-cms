@@ -1,0 +1,28 @@
+{#    <a class="post-sharing__btn" href="javascript:void(0)"> #}
+{#        <img src="{{ asset('images/icon-google-plus-square.png') }}" #}
+{#             alt="icon google plus"></a> #}
+{#    <a class="post-sharing__btn" #}
+{#       href="//pinterest.com/pin/create/button/?url={{ url_share }}&amp;media=&amp;" #}
+{#       data-label="Pinterest" #}
+{#       onclick="window.open(this.href,this.title,'width=500,height=500,top=300px,left=300px');  return false;" #}
+{#       rel="nofollow" target="_blank"> #}
+{#        <img src="{{ asset('images/icon-pinterest-square.png') }}" alt="icon pinterest"></a> #}
+
+<div class="post__sharing">
+    <span>{{ __('app.share') }} {{ type }}:</span>
+    <a href="//www.facebook.com/sharer.php?u={{ url_share }}&amp;style=layout-explore"
+       data-label="Facebook"
+       onclick="window.open(this.href,this.title,'width=500,height=500,top=300px,left=300px');  return false;"
+       rel="nofollow" target="_blank">
+        <img src="{{ asset('images/icon-facebook.png') }}" alt="icon facebook">
+    </a>
+    <a href="#!">
+        <img src="{{ asset('images/icon-google-plus.png') }}" alt="icon google plus">
+    </a>
+    <a href="//twitter.com/share?url={{ url_share }}&amp;style=layout-explore"
+       data-label="Twitter"
+       onclick="window.open(this.href,this.title,'width=500,height=500,top=300px,left=300px');  return false;"
+       rel="nofollow" target="_blank">
+        <img src="{{ asset('images/icon-twitter.png') }}" alt="icon twitter">
+    </a>
+</div>

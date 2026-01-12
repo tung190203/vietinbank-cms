@@ -1,0 +1,35 @@
+
+{#{% if session('error') %}#}
+{#<div class="alert alert-danger">{{ session('error') }}</div>#}
+{#{% endif %}#}
+
+
+<link rel="stylesheet" href="https://www.cssscript.com/demo/minimal-notification-popup-pure-javascript/notifications.css">
+<script src="https://www.cssscript.com/demo/minimal-notification-popup-pure-javascript/notifications.js"></script>
+
+
+<script type="text/javascript">
+    {% if session('success') %}
+        window.createNotification({
+            displayCloseButton: true,
+            positionClass: 'nfc-bottom-right',
+            showDuration: 3000,
+            theme: 'success'
+        })({
+            title: 'Thành công!',
+            message: '{{ session('success') }}'
+        });
+    {% endif %}
+
+    {% if session('error') %}
+    window.createNotification({
+        displayCloseButton: true,
+        positionClass: 'nfc-bottom-right',
+        showDuration: 3000,
+        theme: 'error'
+    })({
+        title: 'Có lỗi xảy ra!',
+        message: '{{ session('error') }}'
+    });
+    {% endif %}
+</script>

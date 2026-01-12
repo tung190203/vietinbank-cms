@@ -1,0 +1,84 @@
+<header class="header">
+    <div class="header__wrapper">
+        <div class="container">
+            <div class="header__inner">
+                <a class="header__logo" href="{{ route('home_page') }}">
+                    <img src="{{ setting.logo }}" alt="{{ setting.meta_title }}"/>
+                </a>
+                <div class="header__elements">
+                    <section class="navbar js-navbar">
+                        <div class="navbar__backdrop js-navbar-toggle"></div>
+                        <div class="navbar__wrapper">
+                            <div class="navbar__header">
+                                <a class="navbar__logo" href="{{ route('home_page') }}">
+                                    <img src="{{ setting.logo }}" alt="{{ setting.meta_title }}"/>
+                                </a>
+                                <button class="btn-toggle js-navbar-toggle ms-auto"></button>
+                            </div>
+                            <div class="navbar__body">
+                                <form class="search" action="{{ route('search') }}">
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" name="key" value="{{ key }}"
+                                               placeholder="Tìm kiếm..."/>
+                                        <button class="input-group-text"><i class="far fa-search"></i></button>
+                                    </div>
+                                </form>
+                                <ul class="menu menu-root">
+                                    {% for main_menu in share.main_menu %}
+                                        {% if main_menu.subcat|length > 0 %}
+                                            <li class="menu-item menu-item-group">
+                                                <a class="menu-link"
+                                                   href="{{ main_menu.href }}"
+                                                   {% if main_menu.open_in_new_tab %}target="_blank"{% endif %}>{{ main_menu.name }}</a>
+                                                <span class="menu-toggle"></span>
+                                                <ul class="menu menu-sub">
+                                                    {% for submenu2 in main_menu.subcat %}
+                                                        {% if submenu2.subcat|length > 0 %}
+                                                            <li class="menu-item menu-item-group">
+                                                                <a class="menu-link"
+                                                                   href="{{ submenu2.href }}"
+                                                                   {% if submenu2.open_in_new_tab %}target="_blank"{% endif %}>
+                                                                    {{ submenu2.name }}</a>
+                                                                <span class="menu-toggle"></span>
+                                                                <ul class="menu menu-sub menu-sub-2">
+                                                                    {% for submenu3 in submenu2.subcat %}
+                                                                        <li class="menu-item">
+                                                                            <a class="menu-link"
+                                                                               href="{{ submenu3.href }}"
+                                                                               {% if submenu3.open_in_new_tab %}target="_blank"{% endif %}>{{ submenu3.name }}</a>
+                                                                        </li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            </li>
+                                                        {% else %}
+                                                            <li class="menu-item">
+                                                                <a class="menu-link"
+                                                                   href="{{ submenu2.href }}"
+                                                                   {% if submenu2.open_in_new_tab %}target="_blank"{% endif %}>{{ submenu2.name }}</a>
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                        {% else %}
+                                            <li class="menu-item">
+                                                <a class="menu-link"
+                                                   href="{{ main_menu.href }}">{{ main_menu.name }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <button class="btn-search" type="button"><i class="fal fa-lg fa-search"></i></button>
+                </div>
+                <a class="btn-hotline" href="tel:{{ setting.hotline }}">
+                    <img src="{{ asset('images/icon-phone-call-red.svg') }}" alt="icon phone"/>
+                    <span class="ms-3">{{ setting.hotline }}</span>
+                </a>
+                <button class="btn-toggle d-xl-none js-navbar-toggle ms-4"></button>
+            </div>
+        </div>
+    </div>
+</header>

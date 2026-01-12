@@ -1,0 +1,60 @@
+<footer class="footer">
+    <div class="container">
+        <div class="row gx-xxl-80 gy-30 pb-5">
+            <div class="col-lg-7">
+                <div class="footer__name">{{ setting.slogen|raw }}</div>
+                <div class="mt-4 mt-xxl-40">
+                    <a class="n-btn n-btn--lg" href="{{ route('contact') }}">Contact Us</a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="f-contact">
+                    <div class="f-contact__item">
+                        <div class="row g-0">
+                            <div class="col-auto f-contact__label">a.</div>
+                            <div class="col">
+                                <p>
+                                    <a href="#!" data-bs-toggle="modal"
+                                       data-bs-target="#google_map_1">{{ setting.address_1 }}</a><br>
+                                    <a href="#!" data-bs-toggle="modal"
+                                       data-bs-target="#google_map_2">{{ setting.address_2 }}</a><br>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="f-contact__item">
+                        <div class="row g-0">
+                            <div class="col-auto f-contact__label">e.</div>
+                            <div class="col"><a href="mailto:{{ setting.email }}">{{ setting.email }}</a></div>
+                        </div>
+                    </div>
+                    <div class="f-contact__item">
+                        <div class="row g-0">
+                            <div class="col-auto f-contact__label">m.</div>
+                            <div class="col"><a href="tel:{{ setting.hotline }}">{{ setting.hotline }}</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="modal fade" id="google_map_1" tabindex="-1" aria-labelledby="google_map_1_label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-radius-0">
+            <div class="modal-body">
+                {{ setting.google_map_1|raw }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="google_map_2" tabindex="-1" aria-labelledby="google_map_2_label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-radius-0">
+            <div class="modal-body">
+                {{ setting.google_map_2|raw }}
+            </div>
+        </div>
+    </div>
+</div>

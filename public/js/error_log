@@ -1,0 +1,171 @@
+[05-Jun-2025 07:32:29 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[05-Jun-2025 07:32:29 UTC] PHP Warning:  file_exists(): Unable to find the wrapper &quot;..https&quot; - did you forget to enable it when you configured PHP? in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 18
+[05-Jun-2025 07:32:29 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:46
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 46
+[05-Jun-2025 07:33:27 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[05-Jun-2025 07:33:27 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:46
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 46
+[05-Jun-2025 07:33:47 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[05-Jun-2025 07:33:47 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[05-Jun-2025 07:33:47 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[05-Jun-2025 07:34:17 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[05-Jun-2025 07:34:17 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:46
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 46
+[05-Jun-2025 07:34:29 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[05-Jun-2025 07:34:29 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[05-Jun-2025 07:34:29 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[05-Jun-2025 07:35:06 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[05-Jun-2025 07:35:06 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 04:11:06 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 04:11:06 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 04:11:06 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 04:11:46 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 04:11:46 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 04:11:46 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 04:12:47 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 04:12:47 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 04:12:47 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 04:17:08 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 04:17:08 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 04:17:08 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 04:17:38 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 04:17:38 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 04:17:38 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 04:18:13 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 04:18:13 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 04:18:13 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 04:18:45 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 04:18:45 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 04:18:45 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 04:19:22 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 04:19:22 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 04:19:22 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:24:44 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 07:24:44 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 07:24:44 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:24:44 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 07:24:44 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 07:24:44 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:24:44 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 07:24:44 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 07:24:44 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:24:44 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 07:24:44 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 07:24:44 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:24:44 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 07:24:44 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 07:24:44 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:24:44 UTC] PHP Warning:  Undefined array key "output_width" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 8
+[31-Jul-2025 07:24:44 UTC] PHP Warning:  Undefined array key "output_height" in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 9
+[31-Jul-2025 07:24:44 UTC] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:45
+Stack trace:
+#0 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 46
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 49
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 46
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 51
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 49
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 51
+[31-Jul-2025 07:25:56 UTC] PHP Fatal error:  Uncaught TypeError: imagecreatetruecolor(): Argument #1 ($width) must be of type int, string given in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:59
+Stack trace:
+#0 /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php(59): imagecreatetruecolor()
+#1 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 59
+[31-Jul-2025 07:25:56 UTC] PHP Fatal error:  Uncaught TypeError: imagecreatetruecolor(): Argument #1 ($width) must be of type int, string given in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:59
+Stack trace:
+#0 /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php(59): imagecreatetruecolor()
+#1 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 59
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 46
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 49
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 51
+[31-Jul-2025 07:25:56 UTC] PHP Fatal error:  Uncaught TypeError: imagecreatetruecolor(): Argument #1 ($width) must be of type int, string given in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:59
+Stack trace:
+#0 /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php(59): imagecreatetruecolor()
+#1 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 59
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 46
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 49
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 51
+[31-Jul-2025 07:25:56 UTC] PHP Fatal error:  Uncaught TypeError: imagecreatetruecolor(): Argument #1 ($width) must be of type int, string given in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:59
+Stack trace:
+#0 /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php(59): imagecreatetruecolor()
+#1 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 59
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 46
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 49
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 51
+[31-Jul-2025 07:25:56 UTC] PHP Fatal error:  Uncaught TypeError: imagecreatetruecolor(): Argument #1 ($width) must be of type int, string given in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:59
+Stack trace:
+#0 /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php(59): imagecreatetruecolor()
+#1 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 59
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 45
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 46
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 49
+[31-Jul-2025 07:25:56 UTC] PHP Warning:  A non-numeric value encountered in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 51
+[31-Jul-2025 07:25:56 UTC] PHP Fatal error:  Uncaught TypeError: imagecreatetruecolor(): Argument #1 ($width) must be of type int, string given in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php:59
+Stack trace:
+#0 /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php(59): imagecreatetruecolor()
+#1 {main}
+  thrown in /home/tourbaz1/web-4.vrplus.info/v02/public/js/image_resize.php on line 59

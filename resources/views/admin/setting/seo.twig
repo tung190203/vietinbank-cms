@@ -1,0 +1,42 @@
+{% extends "admin.index" %}
+
+{% block title %}Cấu hình SEO{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Cấu hình SEO</li>
+{% endblock %}
+
+{% import "admin.forms.input" as formview %}
+{% import "admin.forms.button" as button %}
+
+{% block content %}
+    <hr class="mt-0">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right mb-3">
+                        {{ button.button_save() }}
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary">
+                <form action="{{ route('admin_setting_save') }}" method="post" enctype="multipart/form-data"
+                      class="form-horizontal" id="formDataGrid">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+                        {{ formview.input({'label': 'Meta title','name': 'settings[meta_title]','value': settings.meta_title}) }}
+                        {{ formview.textarea({'label': 'Meta keywords','name': 'settings[meta_keys]','value': settings.meta_keys}) }}
+                        {{ formview.textarea({'label': 'Meta description','name': 'settings[meta_des]','value': settings.meta_des}) }}
+                        {{ formview.textarea({'label': 'Google Analytics Code','name': 'settings[google_analytics]','value': settings.google_analytics,'row': 20}) }}
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

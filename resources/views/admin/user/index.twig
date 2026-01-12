@@ -1,0 +1,46 @@
+{% extends "admin.index" %}
+
+{% block title %}Quản lý user{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">User</li>
+{% endblock %}
+
+{% import "admin.forms.button" as button %}
+
+{% block content %}
+    <hr class="mt-0">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3"></div>
+                <div class="col-xl-6 text-center">
+                </div>
+                <div class="col-xl-3">
+                    <div class="float-right mb-3">
+                        {{ button.button_create({'link': route('admin_user_create')}) }}
+                        {{ button.button_back() }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            {% if users|length > 0 %}
+                                <table class="table table-hover table-grid-admin" style="min-width: 800px">
+                                    {% include "admin.user.list_item" %}
+                                </table>
+                            {% else %}
+                                <p class="text-danger p-3" style="min-height: 500px;">No data!</p>
+                            {% endif %}
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    {{ users.links()|raw }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

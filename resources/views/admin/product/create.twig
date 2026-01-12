@@ -1,0 +1,128 @@
+
+{% extends "admin.index" %}
+
+
+{% block title %}
+    {{ app_obj.exists ? 'Sửa thông tin ' : 'Thêm mới ' }}
+    {{ object.title }}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ route( object.index_route ) }}">Danh sách {{ object.title }}</a></li>
+    <li class="breadcrumb-item active">
+        {{ app_obj.exists ? 'Sửa ' : 'Thêm mới ' }}
+        {{ object.title }}
+    </li>
+{% endblock %}
+
+{% import "admin.forms.input" as formview %}
+{% import "admin.forms.button" as button %}
+
+{% macro image_input(index,key,image_url,field_class) %}
+    {{ formview.upload({
+        'label': 'Hình ảnh '~index,
+        'id': 'image_'~key,
+        'name': 'frm_product_images['~key~']',
+        'id_preview': 'image_preview_'~key,
+        'id_input_image': 'image_input_'~key,
+        'value':  old('frm_product_images['~key~']') ? old('frm_product_images['~key~']') : image_url,
+        'field_class':field_class
+    }) }}   
+{% endmacro %} 
+{% set img_input_field = 'img-input' %}
+
+{% block content %}
+    <style>
+        #cke_1_contents{
+            height:800px !important;
+        }
+    </style>
+    <script src="{{ asset('js/ckfinder/ckfinder.js') }}"></script>
+    <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('backend_assets/js/globals.js') }}"></script>
+    <script>CKFinder.config({connectorPath: '/ckfinder/connector'});</script>
+
+    <hr class="mt-0">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right mb-3">
+                        {{ button.button_save() }}
+                        {% if app_obj.exists %}
+                            {{ button.button_create({'link': route( object.create_route ) }) }}
+                            {{ button.button_delete({'link': route( object.delete_route, app_obj.id) }) }}
+                        {% endif %}
+                            {{ button.button_back({'link': route( object.index_route )}) }}
+                    </div>
+                </div>
+            </div>
+           
+            <div class="card card-primary">
+                {%if app_obj is null or  app_obj == false  %}
+                    {% set app_obj = -1 %}
+                {%endif%}
+                <form action="{{ route( object.save_route , { 'app_obj':app_obj}) }}" method="post" enctype="multipart/form-data"
+                        class="form-horizontal" id="formDataGrid">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+                        {{ formview.input({'label': 'Tên sản phẩm','name': 'frm_name','value': old('frm_name') ? old('frm_name') : app_obj.name , 'errors': errors}) }}
+                        {{ formview.input({'label': 'Mô tả ngắn','name': 'frm_excerpt','value': old('frm_excerpt') ? old('frm_excerpt') : app_obj.excerpt , 'errors': errors}) }}
+                        
+                        
+                        {{ formview.input({'label': 'Slug','name': 'frm_slug','value': old('frm_slug') ? old('frm_slug') : app_obj.slug , 'errors': errors}) }}
+                         
+                        {{ formview.select({
+                            'label': 'Chuyên mục',
+                            'name': 'frm_product_category',
+                            'text_root': '__---__',
+                            'options': list_product_categorys, 
+                            'errors': errors
+                        }) }}
+                        
+                        
+                        {% set product_images = json_decode( app_obj.product_images,true) %}
+                        {% for key in 0..24 %}
+                            {% set index = 1 %}
+                             {% if key < product_images|length or (product_images|length == 0 and key == 0) %}
+                                {% set field_class = img_input_field %}
+                            {% else %}
+                                {% set field_class = 'd-none' %}
+                            {% endif %}
+                            {{ _self.image_input(loop.index,key,product_images[key].url,field_class) }}                           
+                        {% endfor %}
+                        <button class="btn-info btn btn-sm" type="button" onclick="add_image();">
+                            <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>
+                            Thêm ảnh
+                        </button>
+                        
+                        {% set video_urls = json_decode( app_obj.video_urls,true) %}
+                        {% for key in 0..2 %}
+                            {% set index = 1 %}
+                            {# video_urls[key].url #}
+                            {{ formview.input({
+                                'label': 'Youtube Video ID '~loop.index,
+                                'name': 'frm_video_urls['~key~']',
+                                'value': old('frm_video_urls['~key~']') ? old('frm_video_urls['~key~']') : video_urls[key].url , 
+                                'errors': errors}) }}
+                        {% endfor %}
+                        
+                       
+                        {{ formview.textarea({'label': 'Thông tin sản phẩm','name': 'frm_description','value': old('frm_description') ? old('frm_description') : app_obj.description,'id': 'description','editor': true}) }}
+                        
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const add_image = () => {
+            $last_item = $('.img-input:last');
+            $last_item.next().removeClass('d-none').addClass('{{img_input_field}}');
+        };
+    </script>
+{% endblock %}

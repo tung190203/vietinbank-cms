@@ -1,0 +1,52 @@
+<div style="font-family:'Arial',Helvetica Neue,Helvetica,sans-serif;line-height:14pt;padding:20px 0px;font-size:14px;max-width:580px;margin:0 auto">
+    <div style="padding:0 10px;margin-bottom:25px">
+        <p>Xin chào {{ feedback.name }}</p>
+        <p>Cảm ơn Anh/chị đã liên hệ tới <strong>Thamgiare.vn</strong>!</p>
+        <p>Yêu cầu của Anh/chị đã được tiếp nhận, chúng tôi sẽ nhanh chóng liên hệ với Anh/chị.</p>
+    </div>
+    <hr>
+    <div style="padding:0 10px">
+        <table style="width:100%;border-collapse:collapse;margin-top:20px">
+            <thead>
+            <tr>
+                <th style="text-align:left;width:50%;font-size:medium;padding:5px 0">
+                    <strong>Thông tin khách hàng</strong>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="padding-right:15px">
+                    <table style="width:100%">
+                        <tbody>
+                        <tr>
+                            <td>{{ feedback.name }}</td>
+                        </tr>
+                        <tr>
+                            <td style="word-break:break-word;word-wrap:break-word">
+                                <a href="mailto:{{ feedback.email }}"
+                                   target="_blank">{{ feedback.email }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="word-break:break-word;word-wrap:break-word">
+                                <b>Nội dung liên hệ: </b>{{ feedback.content }}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="clear:both"></div>
+    <div style="padding:0 10px">
+        <div style="clear:both"></div>
+        <p style="margin:30px 0">Nếu Anh/chị có bất kỳ câu hỏi nào, xin liên hệ với chúng tôi tại <a
+                    href="mailto:{{ setting.email }}" style="color:#357ebd" target="_blank">{{ setting.email }}</a>
+        </p>
+        <p style="text-align:right"><i>Trân trọng,</i></p>
+        <p style="text-align:right"><strong>Ban quản trị cửa hàng Thamgiare.vn</strong></p>
+    </div>
+</div>

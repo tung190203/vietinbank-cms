@@ -1,0 +1,71 @@
+{% extends "index" %}
+{% block content %}
+
+    <div class="page__content">
+        <!-- main content-->
+        <section class="section bg-light overflow-hidden banner-3">
+            <svg class="banner-3__circle-1" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="50" fill="currentColor"></circle>
+            </svg>
+            <svg class="banner-3__circle-2" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="50" fill="currentColor"></circle>
+            </svg>
+            <svg class="banner-3__circle-3" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="50" fill="currentColor"></circle>
+            </svg>
+            <div class="container">
+                <h2 class="section__title text-start mb-0">Tìm kiếm</h2>
+                <div class="mt-2 mt-md-3 mt-xl-20">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a class="link-unstyled" href="{{ route('home_page') }}">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Tìm kiếm</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <nav class="news-category">
+                    <a class="news-category__item active"
+                       href="#!">Kết quả tìm kiếm cho "{{ key }}"</a>
+                </nav>
+                <div class="row g-3 g-lg-4 g-xl-30">
+                    {% for post in posts %}
+                        <div class="col-6 col-lg-4">
+                            <div class="news">
+                                <a class="news__frame" href="{{ url_post(post) }}">
+                                    <img src="{{ post.image }}" alt="{{ post.name }}"/></a>
+                                <div class="news__info">
+                                    <a href="{{ url_post(post) }}">{{ post.category.name|default('Tin tức') }}</a>&nbsp;|&nbsp;
+                                    {{ post.created_at|date('d.m.Y') }}
+                                </div>
+                                <h3 class="news__title">
+                                    <a href="{{ url_post(post) }}">{{ post.name }}</a>
+                                </h3>
+                                <a class="news__link" href="{{ url_post(post) }}">Đọc thêm
+                                    <i class="fal fa-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% if posts|length < 1 %}
+                        <p class="text-danger">Không tìm tìm thấy kết quả phù hợp...</p>
+                    {% endif %}
+                </div>
+                <nav class="d-flex justify-content-center mt-4 mt-lg-30 mt-xl-60">
+                    {{ posts.links()|raw }}
+                </nav>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block script %}
+    <!-- Load application javascript libraries -->
+{% endblock %}

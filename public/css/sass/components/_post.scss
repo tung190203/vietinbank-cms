@@ -1,0 +1,84 @@
+.post {
+  &__title {
+    font-size: 56px;
+    line-height: 1.2;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $primary;
+    margin-bottom: 24px;
+  }
+
+  &__subtitle {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: $primary;
+    margin-bottom: 20px;
+    margin-top: 1em;
+  }
+
+  &__info {
+    font-size: 16px;
+    line-height: 20px;
+    color: $danger;
+    margin-bottom: 60px;
+
+    a {
+      color: inherit;
+
+      &:hover {
+        color: inherit;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__sapo {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  &__content {
+    font-size: 18px;
+  }
+
+  @include media-breakpoint-down(xxl) {
+    &__title {
+      font-size: 44px;
+    }
+
+    &__subtitle {
+      font-size: 32px;
+    }
+
+    &__content {
+      font-size: 16px;
+    }
+  }
+
+  @include media-breakpoint-down(xl) {
+    &__title {
+      font-size: 36px;
+    }
+
+    &__subtitle {
+      font-size: 28px;
+    }
+
+    &__content {
+      font-size: 14px;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    &__title {
+      font-size: 28px;
+    }
+
+    &__subtitle {
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+  }
+}

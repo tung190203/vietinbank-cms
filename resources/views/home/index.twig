@@ -1,0 +1,151 @@
+{% extends "index" %}
+{% block content %}
+
+    <div class="page__content">
+        <!-- main content-->
+        <section class="banner" id="section_1">
+            <svg class="banner__circle-1" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="50" fill="currentColor"></circle>
+            </svg>
+            <svg class="banner__circle-2" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="50" fill="currentColor"></circle>
+            </svg>
+            <svg class="banner__circle-3" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="50" fill="currentColor"></circle>
+            </svg>
+            <img class="banner__img" src="{{ home_data.section_1.banner }}" alt="{{ home_data.section_1.title }}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="banner__subtitle">{{ home_data.section_1.title|upper }}</div>
+                        <div class="banner__title">{{ home_data.section_1.title_2|upper }}</div>
+                        <div class="banner__desc">
+                            {{ home_data.section_1.content|raw }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="banner__social">
+                <div class="container">
+                    <nav class="n-social">
+                        <a class="n-social__item n-social__item--facebook"
+                           href="{{ setting.facebook }}" target="_blank">
+                            <img class="n-social__icon" src="{{ asset('images/icon-facebook.svg') }}"
+                                 alt="icon facebook">
+                            <img class="n-social__icon-white" src="{{ asset('images/icon-facebook-white.svg') }}"
+                                 alt="icon facebook white">
+                            <span>FACEBOOK</span></a>
+                        <a class="n-social__item n-social__item--youtube" href="{{ setting.youtube }}" target="_blank">
+                            <img class="n-social__icon"
+                                 src="{{ asset('images/icon-youtube.svg') }}"
+                                 alt="icon youtube">
+                            <img class="n-social__icon-white" src="{{ asset('images/icon-youtube-white.svg') }}"
+                                 alt="icon youtube white">
+                            <span>YOUTUBE</span>
+                        </a>
+                        <a class="n-social__item n-social__item--linkedin"
+                           href="{{ setting.linkedin }}" target="_blank">
+                            <img class="n-social__icon"
+                                 src="{{ asset('images/icon-linkedin.svg') }}"
+                                 alt="icon linkedin">
+                            <img class="n-social__icon-white" src="{{ asset('images/icon-linkedin-white.svg') }}"
+                                 alt="icon linkedin white">
+                            <span>LINKEDIN</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </section>
+        <section class="section overflow-hidden bg-light pb-40" id="section_2">
+            <svg class="position-absolute top-50 start-0 text-danger" viewBox="0 0 100 100"
+                 style="z-index: -1; width: 12vw; transform: translate(-50%, -80%);">
+                <circle cx="50" cy="50" r="50" fill="currentColor"></circle>
+            </svg>
+            <svg class="position-absolute top-50 start-0 text-primary" viewBox="0 0 100 100"
+                 style="z-index: -1; width: 18vw; transform: translate(-85%, -25%);">
+                <circle cx="50" cy="50" r="50" fill="currentColor"></circle>
+            </svg>
+            <div class="container">
+                <div class="h-about">
+                    <div class="h-about__bg"></div>
+                    <div class="row g-30 align-items-center mb-30 mb-xl-40 mb-xxl-50">
+                        <div class="col-lg-5">
+                            <div class="section__subtitle text-start"><span>VỀ CHÚNG TÔI</span></div>
+                            <h2 class="section__title text-start mb-0">{{ home_data.section_2.title|raw }}</h2>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="h-about__content">
+                                {{ home_data.section_2.content|raw }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-30">
+                        {% for section_item_2 in home_data.section_2.items %}
+                            <div class="col-lg-4">
+                                <a class="ecosystem" href="{{ section_item_2.url|default('#!') }}" target="_blank">
+                                    <div class="ecosystem__frame">
+                                        <img src="{{ section_item_2.logo }}" alt="logo item"/></div>
+                                    <div class="ecosystem__desc">
+                                        {{ section_item_2.content|raw }}
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <svg class="position-absolute top-0 end-0" viewBox="0 0 100 100"
+                 style="z-index: -1; width: 26.3vw; transform: translate(50%, -25%); color: #F4F4FF">
+                <circle cx="50" cy="50" r="50" fill="currentColor"></circle>
+            </svg>
+            <div class="container">
+                <div class="section__subtitle"><span>DỊCH VỤ</span></div>
+                <h2 class="section__title">DỊCH VỤ CHÚNG TÔI CUNG CẤP</h2>
+                <div class="service-slider">
+                    <div class="service-slider__container swiper-container">
+                        <div class="swiper-wrapper">
+                            {% for service in list_service %}
+                                <div class="swiper-slide">
+                                    <a class="service" href="{{ url_category(service) }}">
+                                        <div class="service__frame">
+                                            <img src="{{ service.image }}" alt="{{ service.name|striptags }}"/>
+                                        </div>
+                                        <div class="service__background">
+                                            <svg viewBox="0 0 100 100">
+                                                <circle cx="50" cy="50" r="50" fill="currentColor"></circle>
+                                            </svg>
+                                        </div>
+                                        <div class="service__body">
+                                            <div class="service__title">
+                                                {{ service.name|raw }}
+                                            </div>
+                                            <a class="service__link" href="{{ url_category(service) }}">Tìm hiểu thêm
+                                                <i class="fal fa-arrow-right ms-2"></i>
+                                            </a>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="service-slider__pagination"></div>
+                </div>
+            </div>
+        </section>
+
+        {% include 'widget/testimonial' %}
+        {% include 'widget/partner' %}
+
+    </div>
+
+{% endblock %}
+
+{% block css %}
+    <!-- Load extra css -->
+{% endblock %}
+
+{% block script %}
+    <!-- Load application javascript libraries -->
+{% endblock %}

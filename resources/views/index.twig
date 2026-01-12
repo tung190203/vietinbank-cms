@@ -1,0 +1,102 @@
+<!doctype html>
+<html class="{{ current_locale }}" lang="{{ current_locale }}">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>{{ setting.meta_title }}</title>
+    <meta name="keywords" content="{{ setting.meta_keys }}">
+    <meta name="description" content="{{ setting.meta_des }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    {% if setting.noindex %}
+        <meta name="robots" content="noindex"/>
+    {% endif %}
+    <!-- Twitter -->
+
+    <!-- Facebook -->
+    <meta property="og:url" content="{{ url().full() }}">
+    <meta property="og:title" content="{{ setting.meta_title }}">
+    <meta property="og:description" content="{{ setting.meta_des }}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ url('/') }}{{ setting.og_image }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <!-- <base href="{{ route('home_page') }}"> -->
+
+    <link rel="icon" href="{{ url('/') ~ setting.favicon }}" type="image/x-icon"/>
+
+    {% block css %}
+        <!-- Load extra css -->
+    {% endblock %}
+
+    <script>var baseUrl = "{{ url('/') }}";</script>
+    <script>var current_locale = "{{ current_locale }}";</script>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/libs.css') }}?v=1.3.1"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/fontawesome-pro/css/all.min.css') }}?v=1.3.1"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}?v=1.3.1"/>
+    <link rel='stylesheet' href='{{ asset('css/custom.css') }}?v=1.3.1' type='text/css' media='all'/>
+
+    <!-- Scripts-->
+    <script src="{{ asset('js/libs.js') }}?v=1.3.1" defer="defer"></script>
+    <script src="{{ asset('js/app.js') }}?v=1.3.1" defer="defer"></script>
+    <script src="{{ asset('js/global.js') }}?v=1.3.1" defer="defer"></script>
+
+    {% block script_header %}
+        <!-- Load application javascript libraries -->
+    {% endblock %}
+
+    {{ setting.google_analytics|raw }}
+
+</head>
+<body class="{{ current_locale }}">
+
+<div class="page">
+    {% include 'header' %}
+
+    {% block content %}
+        <!-- Load content -->
+    {% endblock %}
+
+    {% include 'footer' %}
+</div>
+<nav class="sticky-btns">
+    <a class="sticky-btns__item" href=" mailto:{{ setting.email }}">
+        <img src="{{ asset('images/icon-envelope-white.svg') }}" alt="icon envelope"/>
+    </a>
+    <a class="sticky-btns__item sticky-btns__item--red" href="tel:{{ setting.hotline }}">
+        <img src="{{ asset('images/icon-phone-call-white.svg') }}" alt="icon phone"/>
+    </a>
+</nav>
+<a class="btn-download n-btn" href="{{ setting.url_company_profile|default('#!') }}" target="_blank">Tải hồ sơ năng lực</a>
+<div class="md-pricing modal fade" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button class="btn-close" type="button" data-bs-dismiss="modal"></button>
+                <form class="contact-form" action="#!">
+                    <div class="md-pricing__title">Yêu cầu báo giá</div>
+                    <input class="form-control mb-3 mb-xxl-4" type="text" placeholder="Họ và tên" name="name"/>
+                    <input class="form-control mb-3 mb-xxl-4" type="text" placeholder="Địa chỉ email" name="email"/>
+                    <input class="form-control mb-3 mb-xxl-4" type="text"
+                           placeholder="[Tên Công ty]_YCBG [Tên dịch Vụ]" name="subject"/>
+                    <textarea class="form-control mb-3 mb-xxl-4" rows="6" placeholder="Nội dung yêu cầu"
+                              name="content"></textarea>
+                    <div class="ajax-response"></div>
+                    <div class="text-end">
+                        <button class="n-btn n-btn--md js-request_for_quote" type="submit"
+                                data-url="{{ route('request_for_quote') }}">Gửi yêu cầu
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% block script %}
+    <!-- Load application javascript libraries -->
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,143 @@
+.news-category {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 50px;
+
+  .nav-link {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 24px;
+    padding: 10px 20px;
+    color: $gray;
+    background-color: $gray-light;
+    border-radius: 4px;
+    transition: 0.3s;
+
+    &:hover,
+    &.active {
+      background-color: $danger;
+      color: $white;
+    }
+  }
+
+  @include media-breakpoint-down(xxl) {
+    margin-bottom: 40px;
+    gap: 8px;
+
+    .nav-link {
+      font-size: 16px;
+      padding: 8px 14px;
+    }
+  }
+
+  @include media-breakpoint-down(xxl) {
+    margin-bottom: 30px;
+    gap: 6px;
+
+    .nav-link {
+      font-size: 13px;
+      padding: 6px 12px;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    margin-bottom: 24px;
+    gap: 4px;
+
+    .nav-link {
+      font-size: 12px;
+    }
+  }
+}
+
+.share {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  border-top: 1px solid $border-color;
+  padding-top: 25px;
+  margin-top: 40px;
+
+  &__link {
+    display: inline-flex;
+    margin-left: 15px;
+
+    img {
+      height: 30px;
+    }
+  }
+}
+
+.recent-posts {
+  background-color: $gray-light;
+  border-radius: 10px;
+  padding: 20px;
+
+  &__title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+    border-bottom: 1px solid $gray;
+    padding-bottom: 10px;
+  }
+}
+
+.recruit-form {
+  .form-select,
+  .form-control {
+    background-color: #FAFAFF;
+    border: 0;
+    padding: 20px;
+
+    &::placeholder {
+      color: #828282;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .form-control,
+    .form-select {
+      font-size: 14px;
+      padding: 16px;
+    }
+  }
+}
+
+.job-info {
+  padding: 20px;
+  border-radius: 5px;
+  background-color: $gray-light;
+
+  &:only-child {
+    height: 100%;
+  }
+
+  &__label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: $gray;
+  }
+
+  &__content {
+    font-size: 16px;
+    font-weight: 700;
+    color: $primary;
+  }
+
+  @include media-breakpoint-down(xxl) {
+    padding: 16px;
+
+    &__label {
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    &__content {
+      font-size: 14px;
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{% extends "admin.index" %}
+
+{% block title %}{{ user.exists ? 'Cập nhật' : 'Thêm mới' }}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ route('admin_user') }}">Thành viên</a></li>
+    <li class="breadcrumb-item active">{{ user.exists ? 'Cập nhật' : 'Thêm mới' }}</li>
+{% endblock %}
+
+{% import "admin.forms.input" as formview %}
+{% import "admin.forms.button" as button %}
+
+{% block content %}
+
+    <script src="{{ asset('js/ckfinder/ckfinder.js') }}"></script>
+    <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('backend_assets/js/globals.js') }}"></script>
+    <script>CKFinder.config({connectorPath: '/ckfinder/connector'});</script>
+
+    <hr class="mt-0">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right mb-3">
+                        {{ button.button_save() }}
+                        {% if user.exists and auth_user().isSuperAdmin() %}
+                            {{ button.button_create({'link': route('admin_user_create')}) }}
+                            {{ button.button_delete({'link': route('admin_user_delete', user.id)}) }}
+                        {% endif %}
+                        {{ button.button_back({'link': route('admin_user')}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary">
+                <form action="{{ route('admin_user_save', user) }}" method="post" enctype="multipart/form-data"
+                      class="form-horizontal" id="formDataGrid">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+
+                        {{ formview.input({
+                            'label': 'Tên đăng nhập',
+                            'name': 'username',
+                            'value': old('username') ? old('username') : user.username ,
+                            'errors': errors,
+                            'attrs' : {
+                                'pattern' : '[0-9a-zA-Z_]+'
+                            }
+                        }) }}
+                        {{ formview.input({'label': 'Họ tên','name': 'name','value': old('name') ? old('name') : user.name , 'errors': errors}) }}
+
+                        {{ formview.upload({'label': 'Avatar','id': 'avatar','name': 'avatar',
+                            'id_preview': 'image_preview','id_input_image': 'image_input','value':  old('avatar') ? old('avatar') : user.avatar, 'errors': errors
+                        }) }}
+                        {{ formview.input({'label': 'Mật khẩu','type': 'password','name': 'password','value': old('password') ? old('password') : '' , 'errors': errors}) }}
+                        {{ formview.input({'label': 'Email','type': 'email','name': 'email','value': old('email') ? old('email') : user.email , 'errors': errors}) }}
+                        {{ formview.input({'label': 'Số điện thoại','type': 'number','name': 'phone','value': old('phone') ? old('phone') : user.phone , 'errors': errors}) }}
+
+                        {% if can('user_permission') %}
+                            {{ formview.button_switch({'label': 'Super Admin','name': 'super_admin','value': user.super_admin|default(0) , 'id': 'super_admin', 'errors': errors}) }}
+                            {{ formview.button_switch({'label': 'Trạng thái','name': 'state','value': user.state|default(1) , 'id': 'state', 'errors': errors}) }}
+
+                            <div class="form-group row d-none">
+                                <label class="col-sm-3 col-form-label">Vai trò</label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        {% for permission_id,permission in permissions %}
+                                            <div class="col-md-6">
+                                                <div class="icheck-primary">
+                                                    <input type="checkbox" class="checker chk" name="user_permissions[]"
+                                                           id="user_permissions_{{ permission_id }}"
+                                                           value="{{ permission_id }}"
+                                                           {% if permission_id in user_permissions %}checked="checked"{% endif %}>
+                                                    <label for="user_permissions_{{ permission_id }}">
+                                                        {{ permission }}</label>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

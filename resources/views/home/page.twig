@@ -1,0 +1,42 @@
+{% extends "index" %}
+{% block content %}
+
+    <div class="page__content">
+        <!-- main content-->
+        <div class="container py-60 py-xl-80">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a class="link-unstyled" href="{{ route('home_page') }}">{{ __('app.home') }}</a>
+                </li>
+                {% if ref %}
+                    <li class="breadcrumb-item">
+                        <a class="link-unstyled" href="{{ route('about') }}">{{ __('app.introduction') }}</a>
+                    </li>
+                {% endif %}
+                <li class="breadcrumb-item active"><span>{{ page.name }}</span></li>
+            </ol>
+            <article class="post mt-4">
+                <h1 class="post__title">{{ page.name|upper }}</h1>
+                <div class="post__info">
+                    <span class="me-3">{{ __('app.introduction') }}</span>
+                    <span>{{ page.created_at|date('F m, Y') }}</span>
+                </div>
+                <div class="post__content">
+                    {{ page.content|raw }}
+                </div>
+
+                {% include 'blocks/box_sharing' with {'url_share': url_page(page), 'type': __('app.post')} %}
+
+            </article>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block css %}
+    <!-- Load extra css -->
+{% endblock %}
+
+{% block script %}
+    <!-- Load application javascript libraries -->
+{% endblock %}

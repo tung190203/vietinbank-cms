@@ -1,0 +1,74 @@
+{% extends "admin.index" %}
+
+{% block title %}Quản lý video{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Video</li>
+{% endblock %}
+
+{% block content %}
+    <style>
+    .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        .video-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .video-title {
+            font-size: 14px;
+            word-break: break-all;
+            margin-bottom: 10px;
+        }
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-delete:hover {
+            background: #c82333;
+        }
+    </style>
+    <hr class="mt-0">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="video-grid">
+                {% if videos is not empty %}
+                    {% for video in videos %}
+                        {% set filename = video|split('/')|last %}
+                        <div class="video-card">
+                            <video controls>
+                                <source src="{{ asset('storage/videos/' ~ filename) }}" type="video/mp4">
+                                Trình duyệt của bạn không hỗ trợ video.
+                            </video>
+                            <div class="video-title">{{ filename }}</div>
+
+                            <form action="{{ route('videos.delete', { filename: filename }) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa video này?')">
+                                {{ csrf_field()|raw }}
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn-delete">Xóa video</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p style="grid-column: 1/-1; text-align:center;">Không có video nào.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

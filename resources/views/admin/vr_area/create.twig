@@ -1,0 +1,71 @@
+
+{% extends "admin.index" %}
+
+
+{% block title %}
+    {{ app_obj.exists ? 'Sửa thông tin ' : 'Thêm mới ' }}
+    {{ object.title }}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ route( object.index_route,{'p_id' : object.product.p_id} ) }}">Danh sách {{ object.title }}</a></li>
+    <li class="breadcrumb-item active">
+        {{ app_obj.exists ? 'Sửa ' : 'Thêm mới ' }}
+        {{ object.title }}
+    </li>
+{% endblock %}
+
+{% import "admin.forms.input" as formview %}
+{% import "admin.forms.button" as button %}
+
+{% block content %}
+
+    <script src="{{ asset('js/ckfinder/ckfinder.js') }}"></script>
+    <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('backend_assets/js/globals.js') }}"></script>
+    <script>CKFinder.config({connectorPath: '/ckfinder/connector'});</script>
+
+    <hr class="mt-0">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right mb-3">
+                        {{ button.button_save() }}
+                        {% if app_obj.exists %}
+                            {{ button.button_create({'link': route( object.create_route ) ~ '?p_id=' ~ object.product.p_id}) }}
+                            {{ button.button_delete({'link': route( object.delete_route, app_obj.id) ~ '?p_id=' ~ object.product.p_id}) }}
+                        {% endif %}
+                        {{ button.button_back({'link': route( object.index_route,{'p_id' : object.product.p_id} )}) }}
+                    </div>
+                </div>
+            </div>
+           
+            <div class="card card-primary">
+                {%if app_obj is null or  app_obj == false  %}
+                    {% set app_obj = -1 %}
+                {%endif%}
+                <form action="{{ route( object.save_route , {'p_id' : object.product.p_id , 'app_obj':app_obj}) }}" method="post" enctype="multipart/form-data"
+                        class="form-horizontal" id="formDataGrid">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+                        
+                        {{ formview.input({'label': 'Tên khu vực','name': 'frm_name','value': old('frm_name') ? old('frm_name') : app_obj.name , 'errors': errors}) }}
+                        {{ formview.input({'label': 'Slug','name': 'frm_slug','value': old('frm_slug') ? old('frm_slug') : app_obj.slug , 'errors': errors}) }}
+                        {{ formview.select({
+                            'label': 'Danh mục cha',
+                            'name': 'frm_parent_id',
+                            'text_root': '__---__',
+                            'options': list_area, 
+                            'errors': errors
+                        }) }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

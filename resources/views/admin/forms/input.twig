@@ -1,0 +1,540 @@
+{% macro input(options) %}
+    <div class="form-group row">
+        {% if options.label %}
+            <label
+                class="{{ options.label_class | default('col-sm-3 col-form-label') }}" {% if(options.id) %} for="{{ options.id }}"{% endif %}>
+                {{ options.label|raw }}
+            </label>
+        {% endif %}
+        <div class="{{ options.div_input_class | default('col-sm-9') }}">
+            <input type="{{ options.type | default('text') }}" name="{{ options.name }}"
+                   value="{{ options.value|e }}"
+                   id="{{ options.id | default (options.name) }}"
+                   class="{{ options.input_class | default('form-control') }}"
+                   placeholder="{{ options.placeholder | default (options.label) }}"
+            {% for key,value in options.attrs %} {{ key }}="{{ value|e }}"{% endfor %}
+            >
+            {% if options.help %}<p class="help-block">{{ options.help }}</p>{% endif %}
+            {% if options.errors.has(options.name) %}
+                <span class="text-danger">{{ options.errors.first(options.name) }}</span>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro autocomplete(options) %}
+    {% set attrId = options.attrId|default(str_random(8)) %}
+    <div class="form-group row">
+        {% if (not options.no_label) %}
+            <label
+                class="control-label {{ options.label_class|default('col-sm-3 col-form-label') }}">{{ options.label }}</label>
+        {% endif %}
+        <div class="{{ options.input_class|default('col-sm-9') }}">
+            <input type="text" name="{{ options.name }}" class="form-control auto-complete"
+                   data-acurl="{{ options.link }}"
+                   placeholder="{{ options.placeholder|default('Gõ tên để tìm kiếm...') }}"
+                   data-min-length="{{ options.minLength|default(3) }}"
+                   {% if options.required is not empty %}required{% endif %}
+                {% if options.params %}data-params="{{ json_encode(options.params) }}"{% endif %}
+                   autocomplete="off" value="{{ options.value.name }}" id="{{ attrId }}"
+                   data-inputId="#{{ attrId ~ '_id' }}"/>
+            <input type="hidden" name="{{ options.input_id|default(options.name ~ '_id') }}"
+                   value="{{ options.value.id }}" id="{{ attrId ~ '_id' }}">
+
+            {% if options.help %}
+                <p class="help-block">{{ options.help }}</p>
+            {% endif %}
+
+            {% if options.errors.has(options.name ~ '_id') %}
+                <p class="help-block">{{ options.errors.first(options.name ~ '_id') }}</p>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro textarea(options) %}
+    <div class="form-group row">
+        {% if options.label %}
+            <label
+                class="{{ options.label_class | default('col-sm-3 col-form-label') }}" {% if(options.id) %} for="{{ options.id }}"{% endif %}>
+                {{ options.label }}
+            </label>
+        {% endif %}
+        <div class="{{ options.div_class | default('col-sm-9') }}">
+            <textarea name="{{ options.name }}"
+                      class="{{ options.textarea_class | default('form-control') }}"
+                      id="{{ options.id | default (options.name) }}"
+                      placeholder="{{ options.placeholder | default (options.label) }}"
+                      rows="{{ options.row | default(5) }}"
+            {% for key,value in options.attrs %} {{ key }}="{{ value|e }}"{% endfor %}>{{ options.value|e }}</textarea>
+            {% if options.help %}<p class="help-block">{{ options.help }}</p>{% endif %}
+
+            {% if options.errors.has(options.name) %}
+                <span class="text-danger">{{ options.errors.first(options.name) }}</span>
+            {% endif %}
+        </div>
+        {% if options.editor %}
+            <script>
+                CKEDITOR.replace("{{ options.id }}");
+            </script>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro upload(options) %}
+    <div class="form-group row {{ options.field_class | default('input-field') }}">
+        {% if options.label %}
+            <label
+                class="{{ options.label_class | default('col-sm-3 col-form-label') }}" {% if(options.id) %} for="{{ options.id }}"{% endif %}>
+                {{ options.label }}
+            </label>
+        {% endif %}
+        <div class="{{ options.div_class | default('col-sm-9') }}">
+
+            <div class="input-group">
+                   <span class="input-group-btn color-white">
+                        <a id="{{ options.id }}" class="btn btn-primary border-radius-0">
+                            <i class="far fa-image"></i> {{ options.text_upload|default('Chọn file') }}
+                        </a>
+                    </span>
+                <input id="{{ options.id_input_image }}" class="form-control" value="{{ options.value|e }}" type="text"
+                       name="{{ options.name }}">
+            </div>
+
+            {% if options.id_preview %}
+                <div id="{{ options.id_preview }}"
+                     style="max-width: {{ options.max_with_image|default('200px') }}">
+                    {% if options.value %}
+                        <img src="{{ options.value|e }}" class="mt-3"/>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if options.help %}<p class="help-block">{{ options.help }}</p>{% endif %}
+
+            {% if options.errors.has(options.name) %}
+                <span class="text-danger">{{ options.errors.first(options.name) }}</span>
+            {% endif %}
+        </div>
+
+        <script>
+            var button1 = document.getElementById("{{ options.id }}");
+            button1.onclick = function () {
+                selectFileWithCKFinder("{{ options.id_input_image }}", "{{ options.id_preview }}");
+            };
+        </script>
+    </div>
+{% endmacro %}
+
+{% macro upload_multi(options) %}
+    <div class="form-group row">
+        {% if options.label %}
+            <label
+                class="{{ options.label_class | default('col-sm-3 col-form-label') }}" {% if(options.id) %} for="{{ options.id }}"{% endif %}>
+                {{ options.label }}
+            </label>
+        {% endif %}
+        <div class="{{ options.div_class | default('col-sm-9') }}">
+
+            <div class="input-group">
+                   <span class="input-group-btn color-white">
+                        <a id="{{ options.id }}" class="btn btn-primary border-radius-0">
+                            <i class="far fa-image"></i> {{ options.text_upload|default('Chọn 1 hoặc nhiều file') }}
+                        </a>
+                    </span>
+                <textarea id="{{ options.id_input_image }}" class="form-control d-none"
+                          name="{{ options.name }}">{{ options.value|e }}</textarea>
+            </div>
+
+            <div id="{{ options.id_preview }}" class="list_multiple_image">
+                {% if options.value %}
+                    {% set list_image = options.value|split(';') %}
+                    {% for i,image in list_image %}
+                        <img src="{{ image }}"/>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            {% if options.help %}<p class="help-block">{{ options.help }}</p>{% endif %}
+
+            {% if options.errors.has(options.name) %}
+                <span class="text-danger">{{ options.errors.first(options.name) }}</span>
+            {% endif %}
+        </div>
+
+        <script>
+            var button1 = document.getElementById("{{ options.id }}");
+            button1.onclick = function () {
+                selectMultiFileWithCKFinder("{{ options.id_input_image }}", "{{ options.id_preview }}");
+            };
+        </script>
+        <style>
+            .list_multiple_image > img {
+                display: inline-block;
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                margin-right: 10px;
+                margin-top: 10px;
+            }
+        </style>
+    </div>
+{% endmacro %}
+
+{% macro button_switch(options) %}
+    <div class="form-group row">
+        {% if options.label %}
+            <label class="{{ options.label_class | default('col-sm-3 col-form-label') }}">{{ options.label }}</label>
+        {% endif %}
+        <div class="{{ options.div_class | default('col-sm-9') }}">
+            <input type="checkbox" id="{{ options.id }}" name="{{ options.name }}" value="1"
+                   {% if options.value == 1 %}checked{% endif %} data-bootstrap-switch
+                   data-on-text="{{ options.text_on|default('YES') }}"
+                   data-off-text="{{ options.text_off|default('NO') }}"/>
+        </div>
+    </div>
+    <script>
+        $('document').ready(function () {
+            $("input[data-bootstrap-switch]").each(function () {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            });
+        });
+    </script>
+{% endmacro %}
+
+{% macro select(options) %}
+    <div class="form-group row">
+        {% if options.label %}
+            <label class="{{ options.label_class | default('col-sm-3 col-form-label') }}">{{ options.label }}</label>
+        {% endif %}
+        <div class="{{ options.div_class | default('col-sm-9') }}">
+            <select class="{{ options.select_class | default('form-control') }}"
+                    name="{{ options.name }}"
+                    id="{{ options.id | default (options.name) }}"
+                {% if(options.multiple and options.multiple > 0) %}
+                    multiple
+                    size="{{ options.multiple }}"{% endif %}
+            {% for key,value in options.attrs %} {{ key }}="{{ value|e }}"{% endfor %}>
+            {% if options.text_root %}
+                <option value="{{ options.value_root|default('0') }}">{{ options.text_root }}</option>
+            {% endif %}
+            {{ options.options|raw }}
+            </select>
+            {% if options.errors.has(options.name) %}
+                <span class="text-danger">{{ options.errors.first(options.name) }}</span>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro multi_select(options) %}
+    {% set selected = options.selected is defined ? options.selected : [] %}
+    {% set placeholder = options.placeholder|default('Chọn...') %}
+    {% set name = options.name %}
+    {% set uniqueId = options.id|default('multi-select-' ~ random()) %}
+
+    <div class="form-group row">
+        {% if options.label %}
+            <label class="col-sm-3 col-form-label {% if options.required %}required{% endif %}">
+                {{ options.label }}
+            </label>
+        {% endif %}
+
+        <div class="col-sm-9">
+            <div class="position-relative">
+                {# Container hiển thị tags #}
+                <div id="selected-tags-{{ uniqueId }}"
+                    class="form-control flex flex-wrap items-center gap-1 px-2 py-2 mb-1"
+                    onclick="toggleDropdown_{{ uniqueId }}()"
+                    style="min-height: 48px; cursor: pointer; display: flex; align-items: center; flex-wrap: wrap;">
+                    
+                    {% set hasSelected = false %}
+                    {% for key, value in options.options %}
+                        {% if key in selected %}
+                            {% set hasSelected = true %}
+                            <span class="badge bg-primary text-white d-flex align-items-center px-2 py-2 rounded-pill mr-1"
+                                  data-value="{{ key }}" style="height: 28px;">
+                                {{ value }}
+                                <button type="button" class="ms-2 bg-transparent border-0 text-white"
+                                        style="font-size: 1rem; line-height: 1;"
+                                        onclick="removeTag_{{ uniqueId }}('{{ key }}', event)">
+                                    &times;
+                                </button>
+                            </span>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if not hasSelected %}
+                        <span class="text-muted small">{{ placeholder }}</span>
+                    {% endif %}
+                </div>
+
+                {# Dropdown #}
+                <div id="dropdown_{{ uniqueId }}" class="border rounded shadow bg-white position-absolute w-100"
+                     style="z-index: 9999; display: none; max-height: 220px; overflow-y: auto;">
+                    
+                    {# Search box #}
+                    <div class="mb-2 px-2 pt-2">
+                        <input type="text" class="form-control form-control-sm" placeholder="Tìm kiếm..."
+                               oninput="filterOptions_{{ uniqueId }}(this.value)">
+                    </div>
+
+                    <div id="dropdown-options-{{ uniqueId }}" class="px-2 pb-2">
+                        {% for key, value in options.options %}
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="{{ name }}[]" value="{{ key }}"
+                                       id="{{ uniqueId }}_{{ key }}"
+                                       {% if key in selected %}checked{% endif %}
+                                       onchange="updateTags_{{ uniqueId }}()">
+                                <label class="form-check-label" for="{{ uniqueId }}_{{ key }}">{{ value }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            {% if options.help %}
+                <p class="text-muted">{{ options.help }}</p>
+            {% endif %}
+
+            {% if options.errors and options.errors.has(name) %}
+                <span class="text-danger">{{ options.errors.first(name) }}</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown_{{ uniqueId }}() {
+            const el = document.getElementById('dropdown_{{ uniqueId }}');
+            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function updateTags_{{ uniqueId }}() {
+            const checkboxes = document.querySelectorAll('#dropdown_{{ uniqueId }} input[type="checkbox"]');
+            const container = document.getElementById('selected-tags-{{ uniqueId }}');
+            container.innerHTML = '';
+            
+            let selectedCount = 0;
+            const totalCount = checkboxes.length;
+            const selectedLabels = [];
+
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    selectedCount++;
+                    const label = document.querySelector('label[for="' + checkbox.id + '"]').innerText;
+                    selectedLabels.push({ value: checkbox.value, label: label });
+                }
+            });
+
+            if (selectedCount === 0) {
+                const placeholder = document.createElement('span');
+                placeholder.className = 'text-muted small';
+                placeholder.innerText = '{{ placeholder }}';
+                container.appendChild(placeholder);
+            } else if (selectedCount > 3) {
+                const summary = document.createElement('span');
+                summary.className = 'badge bg-primary text-white d-flex align-items-center px-2 py-2 rounded-pill mr-1';
+                summary.style.height = '28px';
+                summary.innerText = selectedCount === totalCount ?
+                    'Đã lựa chọn tất cả' :
+                    `${selectedCount} trên ${totalCount} đã chọn`;
+                container.appendChild(summary);
+            } else {
+                selectedLabels.forEach(item => {
+                    const span = document.createElement('span');
+                    span.className = 'badge bg-primary text-white d-flex align-items-center px-2 py-2 rounded-pill mr-1';
+                    span.style.height = '28px';
+                    span.setAttribute('data-value', item.value);
+                    span.innerHTML = `
+                        ${item.label}
+                        <button type="button"
+                            class="ms-2 bg-transparent border-0 text-white"
+                            style="font-size: 1rem; line-height: 1;"
+                            onclick="removeTag_{{ uniqueId }}('${item.value}', event)">
+                            &times;
+                        </button>
+                    `;
+                    container.appendChild(span);
+                });
+            }
+        }
+
+        function removeTag_{{ uniqueId }}(value, event) {
+            event.stopPropagation();
+            const checkbox = document.getElementById('{{ uniqueId }}_' + value);
+            if (checkbox) {
+                checkbox.checked = false;
+                updateTags_{{ uniqueId }}();
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('dropdown_{{ uniqueId }}');
+            const tags = document.getElementById('selected-tags-{{ uniqueId }}');
+            if (!dropdown.contains(e.target) && !tags.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        function filterOptions_{{ uniqueId }}(keyword) {
+            const lowerKeyword = keyword.toLowerCase();
+            const options = document.querySelectorAll('#dropdown-options-{{ uniqueId }} .form-check');
+
+            options.forEach(option => {
+                const label = option.querySelector('label').innerText.toLowerCase();
+                option.style.display = label.includes(lowerKeyword) ? 'block' : 'none';
+            });
+        }
+    </script>
+{% endmacro %}
+
+{% macro select_old(options) %}
+    <div class="form-group">
+        {% if options.label %}
+            <label class="{{ options.label_class | default('') }}" for="{{ options.id|default('') }}">
+                {{ options.label | trans }}
+            </label>
+        {% endif %}
+        <div class="{{ options.div_class | default('') }}">
+            <select class="{{ options.select_class | default('form-control') }}"
+                    name="{{ options.name }}"
+                    id="{{ options.id | default ('') }}"
+                {% if(options.multiple and options.multiple > 0) %}
+                    multiple
+                    size="{{ options.multiple }}"{% endif %}
+            {% for key,value in options.attrs %} {{ key }}="{{ value|e }}"{% endfor %}
+            >
+            {% for option in options.options %}
+                <option
+                    value="{{ option[options.value_field|default('value')] }}"{% if options.value == option[options.value_field|default('value')] %}
+                    selected{% endif %}
+                        {% for key,value in option.attrs %} {{ key }}="{{ value|e }}"{% endfor %}>{{ option[options.text_field|default('text')] }}</option>
+                {% if option.childs %}
+                    {% for item in option.childs %}
+                        <option
+                            value="{{ item[options.value_field|default('value')] }}"{% if options.value == item[options.value_field|default('value')] %}
+                            selected{% endif %} {% for key,value in item.attrs %} {{ key }}="{{ value|e }}"{% endfor %}>
+                            &nbsp;&nbsp;&nbsp;{{ item[options.text_field|default('text')] }}</option>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            </select>
+        </div>
+    </div>
+{% endmacro %}
+
+
+
+{% macro input_datetime(options) %}
+    <div class="form-group row">
+        <label
+            class="{{ options.label_css_class | default('col-sm-3 control-label') }} control-label" {% if(options.id) %} for="{{ options.id }}"{% endif %}>{{ options.label }}
+            :</label>
+        <div class="{{ options.input_css_class | default('col-sm-9') }}">
+            <div class="col-xs-7">
+                <div class="input-group date group_{{ options.name }}">
+                    <input type="text" name="{{ options.name }}" value="{{ options.value|date('d/m/Y')|e }}"
+                           {% if(options.id) %}id="{{ options.id }}"{% endif %}
+                           class="{{ options.css_class | default('form-control datepicker') }}" {% for key,value in options.attrs %} {{ key }}="{{ value|e }}"{% endfor %}
+                    >
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                {% if options.errors.has(options.name) %}
+                    <span class="help-block">
+                        <strong>{{ options.errors.first(options.name) }}</strong>
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% set my_script %}
+        <script>
+            $(function () {
+                $('.input-group.group_{{ options.name }}').datetimepicker({
+                    format: 'DD/MM/YYYY HH:mm',
+                    defaultDate: new Date()
+                });
+            });
+        </script>
+    {% endset %}
+    {#{{ template_add_script(my_script) }}#}
+{% endmacro %}
+
+{% macro checkbox(options) %}
+    {% import _self as formview %}
+    <div class="form-group">
+        <label class="{{ options.label_css_class | default('col-sm-3 control-label') }}">{{ options.label }}:</label>
+        <div class="{{ options.input_css_class | default('col-sm-9') }}">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="{{ options.name }}" value="{{ options.value|e }}"{% if(options.id) %}
+                           id="{{ options.id }}"{% endif %} {% for key,value in options.attrs %} {{ key }}="{{ value|e }}"{% endfor %}
+                    /> {{ options.label | trans }}
+                </label>
+            </div>
+            {% if options.errors.has(options.name) %}
+                <span class="help-block">
+                    <strong>{{ options.errors.first(options.name) }}</strong>
+                </span>
+            {% endif %}
+        </div>
+    </div>
+
+{% endmacro %}
+
+
+
+
+{% macro input_date_fromto(options) %}
+    {% set datePickerFromID = options.picker_from_id | default('date-' ~ str_random(8)) %}
+    {% set datePickerToID = options.picker_to_id | default('date-' ~ str_random(8)) %}
+    {% set dateTimePickerOptions = {
+        fromDate: {
+            format: options.format|default('YYYY/MM/DD HH:mm'),
+            useCurrent: options.useCurrent ?: false,
+            defaultDate: options.startDate ?: false
+        },
+        toDate: {
+            format: options.format|default('YYYY/MM/DD HH:mm'),
+            defaultDate: options.endDate ?: false
+        }
+    } %}
+    {% set inputStartName = options.inputStartName|default('startDate') %}
+    {% set inputEndName = options.inputStartName|default('endDate') %}
+
+    <div class="{{ options.container_class | default('col-sm-3') }}">
+        <div class="form-group">
+            <label>{{ options.label_from ? options.label_from : 'Bắt đầu' }}:</label>
+            <div class="input-group date" id="{{ datePickerFromID }}-group">
+                <input type="text" class="form-control DatePicker" name="{{ inputStartName }}"
+                       value="{{ options.values.startDate ? options.values.startDate : '' }}"
+                       id="{{ datePickerFromID }}" data-options="{{ json_encode(dateTimePickerOptions.fromDate) }}">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            {% if options.errors.has(inputStartName) %}
+                <span class="help-block">{{ options.errors.first(inputStartName) }}</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="{{ options.container_class | default('col-sm-3') }}">
+        <div class="form-group">
+            <label>{{ options.label_to ? options.label_to : 'Kết thúc' }}:</label>
+            <div class='input-group date' id="{{ datePickerToID }}-group">
+                <input type="text" class="form-control DatePicker" name="{{ inputEndName }}"
+                       value="{{ options.values.endDate ? options.values.endDate : '' }}"
+                       id="{{ datePickerToID }}" data-options="{{ json_encode(dateTimePickerOptions.toDate) }}">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            {% if options.errors.has(inputEndName) %}
+                <span class="help-block">{{ options.errors.first(inputEndName) }}</span>
+            {% endif %}
+        </div>
+    </div>
+
+{% endmacro %}

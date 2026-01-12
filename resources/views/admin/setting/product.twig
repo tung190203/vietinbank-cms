@@ -1,0 +1,49 @@
+{% extends "admin.index" %}
+
+{% block title %}Cấu hình sản phẩm{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Cấu hình sản phẩm</li>
+{% endblock %}
+
+{% import "admin.forms.input" as formview %}
+{% import "admin.forms.button" as button %}
+
+{% block content %}
+
+    <script src="{{ asset('js/ckfinder/ckfinder.js') }}"></script>
+    <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('backend_assets/js/globals.js') }}"></script>
+    <script>CKFinder.config({connectorPath: '/ckfinder/connector'});</script>
+
+    <hr class="mt-0">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right mb-3">
+                        {{ button.button_save() }}
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary">
+                <form action="{{ route('admin_setting_save') }}" method="post" enctype="multipart/form-data"
+                      class="form-horizontal" id="formDataGrid">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+                        {{ formview.input({'label': 'Phí ship mặc định','name': 'settings[price_ship_default]','value': settings.price_ship_default}) }}
+                        {{ formview.input({'label': 'Giá tối thiểu để được Free ship','name': 'settings[min_price_to_free_ship]','value': settings.min_price_to_free_ship}) }}
+                        {{ formview.textarea({'label': 'Chính sách vận chuyển','name': 'settings[shipping_policy]','value': settings.shipping_policy,'id': 'shipping_policy','editor': true}) }}
+                        {{ formview.textarea({'label': 'Chính sách bảo hành','name': 'settings[warranty_policy]','value': settings.warranty_policy,'id': 'warranty_policy','editor': true}) }}
+                        {{ formview.textarea({'label': 'Thông tin thanh toán','name': 'settings[payment_info]','value': settings.payment_info,'id': 'payment_info','editor': true}) }}
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "index" %}
+{% block content %}
+
+    <div class="page__content">
+        <!-- main content-->
+        <section class="section overflow-hidden contact bg-light">
+            <div class="container"></div>
+            <div class="container">
+                <div class="contact__body">
+                    <svg class="position-absolute bottom-0 start-0 text-danger" viewBox="0 0 100 100"
+                         style="z-index: -2; width: 9.3vw; transform: translate(-60%, -35%);">
+                        <circle cx="50" cy="50" r="50" fill="currentColor"></circle>
+                    </svg>
+                    <svg class="position-absolute top-0 end-0 text-primary" viewBox="0 0 100 100"
+                         style="z-index: -2; width: 17.2vw; transform: translate(75%, 20%);">
+                        <circle cx="50" cy="50" r="50" fill="currentColor"></circle>
+                    </svg>
+                    <div class="row g-30">
+                        <div class="col-lg-7">
+                            <div class="section__subtitle text-start"><span>LIÊN HỆ</span></div>
+                            <h2 class="section__title text-start mb-0">LIÊN HỆ VỚI<br>CHÚNG TÔI</h2>
+                            <div class="contact__desc">
+                                {{ setting.contact_info|raw }}
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-info__item">
+                                    <div class="row g-3">
+                                        <div class="col-auto">
+                                            <i class="fas fa-lg fa-fw fa-envelope text-danger"></i>
+                                        </div>
+                                        <div class="col">
+                                            <a href="mailto:{{ setting.email }}">{{ setting.email }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="contact-info__item">
+                                    <div class="row g-3">
+                                        <div class="col-auto">
+                                            <i class="fas fa-lg fa-fw fa-phone text-danger"></i>
+                                        </div>
+                                        <div class="col">
+                                            <a href="tel:{{ setting.hotline }}">{{ setting.hotline }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="contact-info__item">
+                                    <div class="row g-3">
+                                        <div class="col-auto"><i
+                                                class="fas fa-lg fa-fw fa-map-marker-alt text-danger"></i></div>
+                                        <div class="col">
+                                            <p>
+                                                <a href="#!" data-bs-toggle="modal"
+                                                   data-bs-target="#google_map_1">{{ setting.address_1 }}</a><br>
+                                                <a href="#!" data-bs-toggle="modal"
+                                                   data-bs-target="#google_map_2">{{ setting.address_2 }}</a><br>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <form class="contact-form" action="" method="post" autocomplete="off">
+                                {{ csrf_field() }}
+                                <input class="form-control mb-3 mb-xl-4" type="text" placeholder="Họ và tên" name="name"
+                                       required>
+                                <input class="form-control mb-3 mb-xl-4" type="email" placeholder="Địa chỉ email"
+                                       name="email" required>
+                                <input class="form-control mb-3 mb-xl-4" type="text"
+                                       placeholder="[Tên Công ty]_YCBG [Tên dịch Vụ]" name="subject">
+                                <textarea class="form-control mb-3 mb-xl-4" rows="6" name="content"
+                                          placeholder="Nội dung yêu cầu"></textarea>
+                                {% if session('success') %}
+                                    <div class="col-12 mb-3">
+                                        <div class="alert alert-success">{{ session('success') }}</div>
+                                    </div>
+                                {% endif %}
+                                <div class="text-end">
+                                    <button class="n-btn n-btn--md" type="submit">Gửi yêu cầu</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
+
+{% block css %}
+    <!-- Load extra css -->
+{% endblock %}
+
+{% block script %}
+    <!-- Load application javascript libraries -->
+{% endblock %}

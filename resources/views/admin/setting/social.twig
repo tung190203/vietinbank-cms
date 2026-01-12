@@ -1,0 +1,56 @@
+{% extends "admin.index" %}
+
+{% block title %}Cấu hình mạng xã hội{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Cấu hình mạng xã hội</li>
+{% endblock %}
+
+{% import "admin.forms.input" as formview %}
+{% import "admin.forms.button" as button %}
+
+{% block content %}
+
+    <script src="{{ asset('js/ckfinder/ckfinder.js') }}"></script>
+    <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('backend_assets/js/globals.js') }}"></script>
+    <script>CKFinder.config({connectorPath: '/ckfinder/connector'});</script>
+
+    <hr class="mt-0">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right mb-3">
+                        {{ button.button_save() }}
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary">
+                <form action="{{ route('admin_setting_save') }}" method="post" enctype="multipart/form-data"
+                      class="form-horizontal" id="formDataGrid">
+                    {{ csrf_field() }}
+                    <div class="card-body">
+
+                        {{ formview.upload({'label': 'Og image','id': 'setting_og_image','name': 'settings[og_image]',
+                            'id_preview': 'setting_og_image_preview','id_input_image': 'setting_og_image_input','value': settings.og_image
+                        }) }}
+
+                        {{ formview.input({'label': 'Facebook','name': 'settings[facebook]','value': settings.facebook}) }}
+                        {{ formview.input({'label': 'Facebook Page ID','name': 'settings[facebook_id]','value': settings.facebook_id}) }}
+                        {{ formview.input({'label': 'Instagram','name': 'settings[instagram]','value': settings.instagram}) }}
+                        {{ formview.input({'label': 'Youtube','name': 'settings[youtube]','value': settings.youtube}) }}
+                        {{ formview.input({'label': 'Twitter','name': 'settings[twitter]','value': settings.twitter}) }}
+                        {{ formview.input({'label': 'Linkedin','name': 'settings[linkedin]','value': settings.linkedin}) }}
+                        {{ formview.input({'label': 'Zalo','name': 'settings[zalo]','value': settings.zalo}) }}
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
