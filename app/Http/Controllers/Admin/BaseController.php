@@ -186,6 +186,8 @@ class BaseController extends Controller
     }
     public function save($app_obj = false, Request $request,$get_last_insert_id = false)
     {
+    // dd($request->all());
+
         if ($app_obj && $app_obj > 0) {
             $save_type = 'update';
             $obj_id = $app_obj;
@@ -218,15 +220,15 @@ class BaseController extends Controller
         $this->validate($request, $validate);
         
         foreach ($fields as $k => $v) {
-            if ($v['db_field_name'] == 'video_url' && $request->frm_videourl != null) {
-                $path           = $request->file('frm_videourl')->store('videos', 'public');
-                $url            = Storage::url($path);
-                $db_field_name  = $v['db_field_name'];
-                $app_obj->$db_field_name = $url;
-            } else {
+            // if ($v['db_field_name'] == 'video_url' && $request->frm_videourl != null) {
+            //     $path           = $request->file('frm_videourl')->store('videos', 'public');
+            //     $url            = Storage::url($path);
+            //     $db_field_name  = $v['db_field_name'];
+            //     $app_obj->$db_field_name = $url;
+            // } else {
                 $db_field_name = $v['db_field_name'];
                 $app_obj->$db_field_name = $request->get($k);
-            }
+            // }
             
         }
         
@@ -260,6 +262,7 @@ class BaseController extends Controller
         if ($app_obj) {
             $new_item = $app_obj->replicate();
             $new_item->name = $app_obj->name . " copy";
+            $new_item->slug = $app_obj->slug . "-copy";
             if ($new_item->save()) {
                 $app_obj->export_fields = $export_fields;
                 $this->exportDataToJson2($app_obj);

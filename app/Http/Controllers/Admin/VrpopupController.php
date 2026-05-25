@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vrpopup;
 use App\Models\Vrarea;
 use App\Models\Vrpopupgroup;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 
 class VrpopupController extends BaseController
 {
     public function __construct(Vrpopup $app_obj)
     {
         parent::__construct($app_obj);
-
         $this->export_fields = [
             "list" => [
                 'id'            => 'id',
@@ -39,19 +35,24 @@ class VrpopupController extends BaseController
     {
         if ($app_obj) {
             $app_obj = $this->app_obj::find($app_obj);
-            $selectedAreas = $app_obj->area ? explode(',', $app_obj->area) : [];
             $vrgroup_id = $app_obj->popup_group;
-            $obj_id = $app_obj->id;
+            $current_area_slug = $app_obj->area; // Lấy slug hiện tại của area
         } else {
-            $selectedAreas = [];
             $vrgroup_id = null;
-            $obj_id = null;
+            $current_area_slug = null;
         }
 
         $object = $this->object;
 
-        // Multi-select expects associative array [id => name]
-        $list_vrareas = Vrarea::get_all()->pluck('name','id')->toArray();
+        // 1. Tạo danh sách Khu vực (chọn 1) - Dùng slug làm value
+        $list_vrareas = Vrarea::where('state', 1)->get();
+        $area_options = "";
+        foreach ($list_vrareas as $area) {
+            $selected = ($current_area_slug == $area->slug) ? 'selected="selected"' : '';
+            $area_options .= '<option value="' . $area->slug . '" ' . $selected . '>' . $area->name . '</option>';
+        }
+
+        // 2. Danh sách Nhóm nội dung (giữ nguyên logic cũ của bạn)
         $list_popup_groups = Vrpopupgroup::makeOptionsString(
             $this->get_list_by_slug(Vrpopupgroup::get_all()->addSelect('slug')),
             $vrgroup_id
@@ -59,46 +60,56 @@ class VrpopupController extends BaseController
 
         return view(
             'admin.' . $this->object['name'] . '.create',
-            compact('object', 'app_obj', 'list_vrareas', 'list_popup_groups', 'selectedAreas')
+            compact('object', 'app_obj', 'area_options', 'list_popup_groups')
         );
     }
 
     // ===================== SAVE =====================
     public function save($app_obj = false, Request $request, $get_last_insert_id = false)
     {
-        // Convert multi-select array to comma-separated string for DB
-        $areas = $request->get('frm_vr_area', []);
-        if (is_array($areas)) {
-            $request->merge([
-                'frm_vr_area' => implode(',', $areas)
-            ]);
-        }
+        $area = $request->get('frm_vr_area');
+        $urls = $request->get('frm_popup_images', []);
+        $popup_images = [];
 
-        // Convert popup images array to JSON
-        function array_urls_to_json($urls){
-            $popup_images = [];
-            foreach($urls as $v){
-                if($v != null){
+        if (is_array($urls)) {
+            foreach ($urls as $v) {
+                if (!empty($v)) {
                     $popup_images[] = ['url' => $v];
                 }
             }
-            return count($popup_images) > 0 ? json_encode($popup_images) : null;
         }
-
+        // Chỉ xử lý tạo slug nếu là THÊM MỚI (app_obj không có hoặc <= 0)
+        if (!$app_obj || $app_obj <= 0) {
+            if (!$request->filled('frm_slug')) {
+                $request->merge(['frm_slug' => \Str::slug($request->get('frm_name'))]);
+            }
+        }
+        // Nếu là CẬP NHẬT
+        else {
+            $current = $this->app_obj::find($app_obj);
+            if ($current) {
+                $request->merge(['frm_slug' => $current->slug]);
+            }
+        }
         $request->merge([
-            'frm_popup_images' => array_urls_to_json($request->get('frm_popup_images'))
+            'frm_vr_area'      => $area,
+            'frm_popup_images' => count($popup_images) > 0 ? json_encode($popup_images) : null
         ]);
-
         return parent::save($app_obj, $request, $get_last_insert_id);
     }
 
     // ===================== INDEX =====================
-    public function index_join($index_data_list){
-        $index_data_list = $index_data_list->select($this->app_obj->table.'.*', 'vr_areas.name as area_name_create_in_controller');
-        $index_data_list = $index_data_list->leftJoin('vr_areas', 'vr_areas.slug', '=', $this->app_obj->table.'.area');
-
-        $index_data_list = $index_data_list->select($this->app_obj->table.'.*', 'vr_popup_groups.name as popupgroup_name_create_in_controller');
-        $index_data_list = $index_data_list->leftJoin('vr_popup_groups', 'vr_popup_groups.slug', '=', $this->app_obj->table.'.popup_group');
+    public function index_join($index_data_list)
+    {
+        $table = $this->app_obj->table;
+        $index_data_list = $index_data_list
+            ->leftJoin('vr_areas', $table . '.area', '=', 'vr_areas.slug')
+            ->leftJoin('vr_popup_groups', $table . '.popup_group', '=', 'vr_popup_groups.slug')
+            ->select(
+                $table . '.*',
+                'vr_areas.name as area_name',
+                'vr_popup_groups.name as popupgroup_name_create_in_controller'
+            );
         return $index_data_list;
     }
 
@@ -120,30 +131,43 @@ class VrpopupController extends BaseController
 
     public function index_order_by($index_data_list){
         $index_data_list = $index_data_list->orderBy('vr_areas.order_no', 'ASC');
-        // $index_data_list = $index_data_list->orderBy('vr_areas.id', 'ASC');
-        // $index_data_list = $index_data_list->orderBy('vr_popup_groups.id', 'ASC');
         return $index_data_list;
     }
 
-    public function index_view_2($index_data){
+    public function index_view_2($index_data)
+    {
         $vrarea_id = null;
         $vrgroup_id = null;
-        if(property_exists($this, 'filter')){
-            if($this->filter['area'] != 'all'){
+
+        if (property_exists($this, 'filter')) {
+            if ($this->filter['area'] != 'all') {
                 $vrarea_id = $this->filter['area'];
-            }            
-            if($this->filter['group'] != 'all'){
+            }
+            if ($this->filter['group'] != 'all') {
                 $vrgroup_id = $this->filter['group'];
             }
         }
+
+        // 1. Tạo chuỗi option cho Khu vực
         $index_data['list_vrareas'] = Vrarea::makeOptionsString(
             $this->get_list_by_slug(Vrarea::get_all()->addSelect('slug')),
             $vrarea_id
         );
+
+        // 2. LOGIC ĐƯỢC THAY ĐỔI: Lọc nhóm nội dung theo khu vực được chọn
+        $group_query = Vrpopupgroup::get_all()->addSelect('slug');
+        if (!empty($vrarea_id) && $vrarea_id != 'all') {
+            $current_area = Vrarea::where('slug', $vrarea_id)->first();
+            if ($current_area) {
+                $group_query = $group_query->where('vr_area_id', $current_area->id);
+            }
+        }
+        // 3. Tạo chuỗi option cho Nhóm (lúc này danh sách đã được lọc tự động)
         $index_data['list_groups'] = Vrpopupgroup::makeOptionsString(
-            $this->get_list_by_slug(Vrpopupgroup::get_all()->addSelect('slug')),
+            $this->get_list_by_slug($group_query),
             $vrgroup_id
         );
+
         return view($this->index_view, $index_data);
     }
 
@@ -158,9 +182,12 @@ class VrpopupController extends BaseController
     }
 
     // ===================== EXPORT =====================
-    public static function exportDataToJson2___($app_obj)
+    public static function exportDataToJson2($app_obj)
     {
-        $export_items = $app_obj::where('state', 1)->orderBy('order_no','asc')->get();
+        $export_items = $app_obj::where([
+            'state'=> 1,
+            'is_show' => 1
+        ])->orderBy('order_no','asc')->get();
         $data = [];
        
         foreach ($export_items as $export_item) {

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vrarea;
-use Illuminate\Support\Facades\App;
+
 
 class VrareaController extends BaseController
 {
@@ -51,18 +50,24 @@ class VrareaController extends BaseController
     public function edit0($app_obj = false)
     {
         $app_obj                = $this->app_obj::find($app_obj);
-        $lang_code              = App::getLocale();
         $object                 = $this->object;
-        $query_area_category    = Vrarea::get_all(null, '.id', 'asc')->addSelect('parent_id');
-        $wc_array               = ($query_area_category->get()->toArray());
-        $list_area              = [];
+        return view('admin.' . $this->object['name'] . '.create', compact('object', 'app_obj'));
+    }
 
-        foreach($wc_array as $k=>$v){
-            $list_area[$k]              = (object) $v;
-            $list_area[$k]->parent_id   = $v["parent_id"];
+    public function save($app_obj = false, Request $request, $get_last_insert_id = false)
+    {
+        // TRƯỜNG HỢP THÊM MỚI (app_obj không tồn tại hoặc <= 0)
+        if (!$app_obj || $app_obj <= 0) {
+            $new_slug = 'slug-' . \Str::slug($request->get('frm_name'));
+            $request->merge(['frm_slug' => $new_slug]);
         }
-        $list_area = Vrarea::makeOptionsStringLoop($list_area, 0, '', $app_obj != null ? $app_obj->parent_id : null);
-
-        return view('admin.' . $this->object['name'] . '.create', compact('object', 'app_obj','list_area'));
+        // TRƯỜNG HỢP CẬP NHẬT
+        else {
+            $current_item = $this->app_obj::find($app_obj);
+            if ($current_item) {
+                $request->merge(['frm_slug' => $current_item->slug]);
+            }
+        }
+        return parent::save($app_obj, $request, $get_last_insert_id);
     }
 }

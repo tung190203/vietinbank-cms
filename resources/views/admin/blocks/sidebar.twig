@@ -14,43 +14,35 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 <li class="nav-header">QUẢN LÝ NỘI DUNG</li>
-                
-                <li class="nav-item d-none">
-                    <a href="{{ route('admin_product_category') }}" class="nav-link {{ selectedMainMenu == 'product_category' ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-chevron-right"></i>
-                        <p>Chuyên mục</p>
-                    </a>
-                </li>
-                <li class="nav-item  d-none">
-                    <a href="{{ route('admin_product') }}" class="nav-link {{ selectedMainMenu == 'product' ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-chevron-right"></i>
-                        <p>Danh sách sản phẩm</p>
-                    </a>
-                </li>
+                {% if can('vr_area') %}
                 <li class="nav-item">
                     <a href="{{ route('admin_vr_area') }}" class="nav-link {{ selectedMainMenu == 'vr_area' ? 'active' : '' }}">
                         <i class="nav-icon fas fa-chevron-right"></i>
                         <p>Quản lý khu vực</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin_vr_popup') }}" class="nav-link {{ selectedMainMenu == 'vr_popup' ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-chevron-right"></i>
-                        <p>Quản lý nội dung</p>
-                    </a>
-                </li>
-                <li class="nav-item">
+                {% endif %}
+               {% if can('vr_popup') %}
+<li class="nav-item">
+    <a href="{{ route('admin_vr_popup') }}"
+       class="nav-link {{ selectedMainMenu == 'vr_popup' ? 'active' : '' }}">
+        <i class="nav-icon fas fa-chevron-right"></i>
+        <p>Quản lý nội dung</p>
+    </a>
+</li>
+{% endif %}
+                {% if can('vr_popup_group') %}<li class="nav-item">
                     <a href="{{ route('admin_vr_popup_group') }}" class="nav-link {{ selectedMainMenu == 'vr_popup_group' ? 'active' : '' }}">
                         <i class="nav-icon fas fa-chevron-right"></i>
                         <p>Quản lý nhóm nội dung</p>
                     </a>
-                </li>
-                <li class="nav-item">
+                </li>{% endif %}
+                {# <li class="nav-item">
                     <a href="{{ route('admin_guestbook') }}" class="nav-link {{ selectedMainMenu == 'guestbook' ? 'active' : '' }}">
                         <i class="nav-icon fas fa-chevron-right"></i>
                         <p>Quản lý sổ lưu bút</p>
                     </a>
-                </li>
+                </li> #}
 
                 <li class="nav-header">HỆ THỐNG</li>
 
