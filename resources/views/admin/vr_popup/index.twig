@@ -87,59 +87,81 @@
 {% block script %}
     <script>
         const this_url = "{{url('/dashboard/vr_popup')}}";
+        
         function get_filter_object_select_state($filter_select){
             const result = {};
-            $.each($filter_select,function(){
-                const valueSelected = this.value;
+            $.each($filter_select, function(){
                 const this_name = $(this).attr('name');
                 result[this_name] = this.value == 0 ? "all" : this.value;
             });
             return result; 
         }
+        
         var getUrlParameter = function getUrlParameter(sParam) {
             var sPageURL = window.location.search.substring(1),
                 sURLVariables = sPageURL.split('&'),
-                sParameterName,
-                i;
+                sParameterName, i;
 
             for (i = 0; i < sURLVariables.length; i++) {
                 sParameterName = sURLVariables[i].split('=');
-
                 if (sParameterName[0] === sParam) {
                     return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
                 }
             }
             return false;
         };
+
         $('#search_txt').val(getUrlParameter('search') != false ? getUrlParameter('search') : '');
-        $( document ).ready(function() {
-            $filter_select  = $('#filter_object select');
+
+        $(document).ready(function() {
+            const $filter_select = $('#filter_object select');
+            const $areaSelect = $('select[name="filter_vr_area"]');
+            const $groupSelect = $('select[name="filter_vr_group"]');
             var search = $('#search_txt').val();
-            $.each($filter_select,function(){
+
+            // ================= LOGIC KHÓA / MỞ Ô NHÓM =================
+            // Kiểm tra giá trị Khu vực hiện tại (nếu bằng 'all', bằng 0 hoặc rỗng thì KHÓA ô Nhóm)
+            if ($areaSelect.val() == 'all' || $areaSelect.val() == '0' || !$areaSelect.val()) {
+                $groupSelect.prop('disabled', true); // Khóa không cho chọn
+                $groupSelect.val('all');             // Đưa giá trị Nhóm về Tất cả
+                $groupSelect.css('background-color', '#e9ecef'); // Làm mờ ô để hiển thị trực quan bị block
+            } else {
+                $groupSelect.prop('disabled', false); // Mở khóa nếu đã chọn Khu vực
+                $groupSelect.css('background-color', '#fff');
+            }
+            // ==========================================================
+
+            $.each($filter_select, function(){
                 const this_select = this;
-                $(this_select).on('change',function(){
-                    const valueSelected = this.value;
-                    console.log(valueSelected);
-                    const state =  get_filter_object_select_state($filter_select);
-                    console.log('STATE:',state);
-                    const filter_group  = state.filter_vr_group;
-                    const filter_area   = state.filter_vr_area;
-                    window.location.href = this_url+"/group/"+filter_group+"/area/"+filter_area+'?search='+search;
+                $(this_select).on('change', function(){
+                    const this_name = $(this).attr('name');
+                    const state = get_filter_object_select_state($filter_select);
+                    
+                    let filter_group = state.filter_vr_group;
+                    let filter_area   = state.filter_vr_area;
+
+                    // Nếu người dùng thay đổi ô Khu vực
+                    if (this_name === 'filter_vr_area') {
+                        filter_group = 'all'; // Reset nhóm về 'all' khi đổi Khu vực
+                    }
+
+                    window.location.href = this_url + "/group/" + filter_group + "/area/" + filter_area + '?search=' + search;
                 });
             });
 
             $('#search_txt').keypress(function(e){
                 if (e.which == 13) {
                     var search = $(this).val();
-                    $.each($filter_select, function(key, _value){
-                        const this_select = _value;
-                        const valueSelected = _value.value;
-                        const state =  get_filter_object_select_state($filter_select);
-                        console.log('STATE:',state);
-                        const filter_group  = state.filter_vr_group;
-                        const filter_area   = state.filter_vr_area;
-                        window.location.href = this_url+"/group/"+filter_group+"/area/"+filter_area+'?search='+search;
-                    }); 
+                    const state = get_filter_object_select_state($filter_select);
+                    const filter_group  = state.filter_vr_group;
+                    const filter_area   = state.filter_vr_area;
+                    
+                    // Nếu bấm enter khi Khu vực chưa chọn thì không truyền filter_group đi
+                    if ($areaSelect.val() == 'all' || $areaSelect.val() == '0' || !$areaSelect.val()) {
+                        window.location.href = this_url + "/group/all/area/" + filter_area + '?search=' + search;
+                    } else {
+                        window.location.href = this_url + "/group/" + filter_group + "/area/" + filter_area + '?search=' + search;
+                    }
                 }
             });
         });

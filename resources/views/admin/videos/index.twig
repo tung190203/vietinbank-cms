@@ -8,7 +8,40 @@
 
 {% block content %}
     <style>
-    .video-grid {
+        /* CSS cho khu vực Upload */
+        .upload-zone {
+            background: #f8f9fa;
+            border: 2px dashed #007bff;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .upload-zone:hover {
+            background: #e9ecef;
+        }
+        .progress-container {
+            display: none;
+            margin-top: 15px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 15px;
+            background: #28a745;
+            color: white;
+            font-size: 11px;
+            text-align: center;
+            line-height: 15px;
+            transition: width 0.1s;
+        }
+
+        /* CSS cho Grid Video */
+        .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 20px;
@@ -19,6 +52,9 @@
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         video {
             width: 100%;
@@ -30,6 +66,25 @@
             font-size: 14px;
             word-break: break-all;
             margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: auto;
+        }
+        .btn-copy {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-copy:hover {
+            background: #0056b3;
         }
         .btn-delete {
             background: #dc3545;
@@ -44,31 +99,142 @@
             background: #c82333;
         }
     </style>
+
     <hr class="mt-0">
     <section class="content">
         <div class="container-fluid">
-            <div class="video-grid">
+            
+            <div class="upload-zone" id="dropzone" onclick="document.getElementById('videoInput').click()">
+                <i class="fas fa-cloud-upload-alt" style="font-size: 40px; color: #007bff; margin-bottom: 10px;"></i>
+                <h5>Click để chọn file upload</h5>
+                <input type="file" id="videoInput" accept="video/mp4" style="display: none;">
+                
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar" id="progressBar">0%</div>
+                </div>
+            </div>
+
+            <div class="video-grid" id="videoGrid">
                 {% if videos is not empty %}
                     {% for video in videos %}
                         {% set filename = video|split('/')|last %}
                         <div class="video-card">
-                            <video controls>
-                                <source src="{{ asset('storage/videos/' ~ filename) }}" type="video/mp4">
-                                Trình duyệt của bạn không hỗ trợ video.
-                            </video>
-                            <div class="video-title">{{ filename }}</div>
+                            <div>
+                                <video controls preload="none">
+                                    <source src="{{ asset('storage/videos/' ~ filename) }}" type="video/mp4">
+                                    Trình duyệt của bạn không hỗ trợ video.
+                                </video>
+                                <div class="video-title">{{ filename }}</div>
+                            </div>
 
-                            <form action="{{ route('videos.delete', { filename: filename }) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa video này?')">
-                                {{ csrf_field()|raw }}
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit" class="btn-delete">Xóa video</button>
-                            </form>
+                            <div class="btn-group">
+                                <button type="button" class="btn-copy" onclick="copyVideoPath('/storage/videos/{{ filename }}', this)">
+                                    <i class="fas fa-copy"></i> Copy Link
+                                </button>
+
+                                <form action="{{ route('videos.delete', { filename: filename }) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa video này?')">
+                                    {{ csrf_field()|raw }}
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn-delete"><i class="fas fa-trash"></i> Xóa</button>
+                                </form>
+                            </div>
                         </div>
                     {% endfor %}
                 {% else %}
-                    <p style="grid-column: 1/-1; text-align:center;">Không có video nào.</p>
+                    <p id="noVideoMsg" style="grid-column: 1/-1; text-align:center;">Không có video nào.</p>
                 {% endif %}
             </div>
         </div>
     </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // 1. Hàm Xử lý copy link nhanh chóng
+        function copyVideoPath(path, buttonElement) {
+            // Sử dụng Clipboard API của trình duyệt hiện đại
+            navigator.clipboard.writeText(path).then(() => {
+                // Thay đổi tạm thời text trên button để người dùng biết đã thành công
+                const oldText = buttonElement.innerHTML;
+                buttonElement.innerHTML = '<i class="fas fa-check"></i> Đã Copy!';
+                buttonElement.style.background = '#28a745';
+                
+                // Trả về trạng thái cũ sau 2 giây
+                setTimeout(() => {
+                    buttonElement.innerHTML = oldText;
+                    buttonElement.style.background = '#007bff';
+                }, 2000);
+            }).catch(err => {
+                // Phương án dự phòng nếu trình duyệt cũ chặn API Clipboard
+                const el = document.createElement('textarea');
+                el.value = path;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                alert('Đã copy đường dẫn: ' + path);
+            });
+        }
+
+        // 2. Xử lý Upload Video Ngầm qua AJAX (Giúp giao diện không bị treo)
+        document.getElementById('videoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Chỉ cho phép định dạng mp4
+            if (file.type !== "video/mp4") {
+                Swal.fire('Lỗi', 'Hệ thống chỉ chấp nhận file định dạng video/mp4', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('video', file);
+            // Lấy token bảo mật csrf từ form sẵn có trong template của bạn
+            const csrfToken = document.querySelector('input[name="_token"]').value;
+
+            const xhr = new XMLHttpRequest();
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+
+            progressContainer.style.display = 'block';
+
+            // Bắt sự kiện cập nhật tiến trình % thực tế từ trình duyệt gửi lên server
+            xhr.upload.addEventListener('progress', function(e) {
+                if (e.lengthComputable) {
+                    const percentComplete = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = percentComplete + '%';
+                    progressBar.innerText = percentComplete + '%';
+                }
+            });
+
+            xhr.open('POST', "{{ route('videos.upload') }}", true);
+            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    
+                    Swal.fire({
+                        title: 'Thành công!',
+                        text: 'Video đã tải lên hệ thống mượt mà.',
+                        icon: 'success',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+
+                    // Làm mới trang sau 2 giây để cập nhật lại danh sách view Grid gọn gàng nhất
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+
+                } else {
+                    Swal.fire('Thất bại', 'Có lỗi xảy ra trong quá trình upload video.', 'error');
+                }
+                progressContainer.style.display = 'none';
+                progressBar.style.width = '0%';
+            };
+
+            xhr.send(formData);
+        });
+    </script>
 {% endblock %}

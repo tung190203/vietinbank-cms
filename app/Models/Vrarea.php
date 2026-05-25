@@ -43,22 +43,18 @@ class Vrarea extends BaseModel
     }
     public static function getFields()
     {
-        $html_form_fields = [
+        return [
             'frm_name' => [
+                'db_field_name' => 'name',
                 'validate' => 'required|string',
-                'db_field_name' => 'name'
+                'validate_unique' => '|unique:vr_areas,name,',
             ],
             'frm_slug' => [
+                'db_field_name' => 'slug',
                 'validate' => 'required|string',
-                'db_field_name' => 'slug'
+                'validate_unique' => '|unique:vr_areas,slug,',
             ],
-            'frm_parent_id' => [
-                'validate' => 'required',
-                'db_field_name' => 'parent_id'
-            ],          
-
         ];
-        return $html_form_fields;
     }
 
     public static function makeOptionColumnButton($object_name)
@@ -75,5 +71,25 @@ class Vrarea extends BaseModel
             }
         ];
         return $buttons;
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            // Nếu là thêm mới (bản ghi chưa tồn tại id)
+            if (!$model->exists) {
+                if (!\Str::startsWith($model->slug, 'slug-')) {
+                    $model->slug = 'slug-' . \Str::slug($model->name);
+                }
+            }
+            // Nếu là cập nhật
+            else {
+                if (empty($model->slug)) {
+                    $model->slug = $model->getOriginal('slug');
+                }
+            }
+        });
     }
 }

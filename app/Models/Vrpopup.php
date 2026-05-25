@@ -23,11 +23,16 @@ class Vrpopup extends BaseModel
                 'style' => "width='15%'"
             )
         );
+        array_push($clsDataGrid, array(
+            'field' => 'area_name', // Tên trường ảo sau khi Join
+            'title' => "Khu vực",
+            'style' => "width='15%' align='center'"
+        ));
         array_push(
             $clsDataGrid,
             array(
                 'field' => 'slug',
-                'title' => "Slug",
+                'title' => "Mã code",
                 'style' => "width='15%'"
             )
         );
@@ -47,24 +52,6 @@ class Vrpopup extends BaseModel
                 'style' => "width='15%'"
             )
         );
-        // array_push(
-        //     $clsDataGrid,
-        //     array(
-        //         'field' => 'area_name_create_in_controller',
-        //         'title' => "Khu vực",
-        //         'style' => "width='15%'"
-        //     )
-        // );
-        // array_push(
-        //     $clsDataGrid,
-        //     array(
-        //         'field' => 'popup_images',
-        //         'title' => "Hình ảnh",
-        //         'style' => "width='15%'"
-        //     )
-        // );
-       
-        
         $object = array(
             'name' => 'vr_popup',
             'title' => 'Nội dung',
@@ -80,13 +67,14 @@ class Vrpopup extends BaseModel
                 'db_field_name' => 'name'
             ],
             'frm_slug' => [
-                'validate' => 'required|string',
-                'db_field_name' => 'slug'
+                'validate' => 'required|string', // Gộp chung vào đây
+                'db_field_name' => 'slug',
+                'validate_unique' => '|unique:vr_areas,slug,',
             ],
             'frm_description' => [
                 'validate' => 'string|nullable',
                 'db_field_name' => 'description'
-            ],           
+            ],
             'frm_popup_images' => [
                 'validate' => 'string|nullable',
                 'db_field_name' => 'popup_images'
@@ -96,19 +84,19 @@ class Vrpopup extends BaseModel
                 'db_field_name' => 'popup_3ds'
             ],
             'frm_vr_area' => [
-                'validate' => 'string',
+                'validate' => 'required|string',
                 'db_field_name' => 'area'
             ],
             'frm_popup_group' => [
-                'validate' => 'string',
+                'validate' => 'required|string',
                 'db_field_name' => 'popup_group'
             ],
             'frm_is_show' => [
-                'validate' => 'string',
+                'validate' => 'integer',
                 'db_field_name' => 'is_show'
             ],
             'frm_videourl' => [
-                'validate' => 'mimes:mp4,mov,avi,mkv,webm|max:512000',
+                'validate' => 'string|nullable',
                 'db_field_name' => 'video_url'
             ]
         ];

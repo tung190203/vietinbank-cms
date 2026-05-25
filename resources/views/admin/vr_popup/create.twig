@@ -63,9 +63,7 @@
                     {{ csrf_field() }}
                     <div class="card-body">
                         
-                        {{ formview.input({'label': 'Tên nội dung','name': 'frm_name','value': old('frm_name') ? old('frm_name') : app_obj.name , 'errors': errors}) }}
-                        {{ formview.input({'label': 'Slug','name': 'frm_slug','value': old('frm_slug') ? old('frm_slug') : app_obj.slug , 'errors': errors}) }}
-                        
+                        {{ formview.input({'label': 'Tên nội dung','name': 'frm_name','value': old('frm_name') ? old('frm_name') : app_obj.name , 'errors': errors}) }} 
                         {{ formview.select({
                             'label': 'Nhóm nội dung',
                             'name': 'frm_popup_group',
@@ -76,16 +74,15 @@
 
                         {{ formview.textarea({'label': 'Thông tin','name': 'frm_description','value': old('frm_description') ? old('frm_description') : app_obj.description,'id': 'description','editor': true}) }}
 
-                        {% set uniqueId = options.id|default('multi_select_' ~ random()) %}
-                        {% set selectedAreas = app_obj.area is iterable ? app_obj.area : (app_obj.area ? app_obj.area|split(',') : []) %}
-                        {{ formview.multi_select({
+                       {# Xóa bỏ đoạn multi_select cũ và thay bằng đoạn này #}
+
+                        {{ formview.select({
                             'label': 'Khu vực',
                             'name': 'frm_vr_area',
-                            'options': list_vrareas,
-                            'selected': selectedAreas,
-                            'placeholder': 'Chọn khu vực...',
-                            'errors': errors,
-                            'id': uniqueId,
+                            'text_root': '-- Chọn một khu vực --',
+                            'value_root': '',
+                            'options': area_options, 
+                            'errors': errors
                         }) }}
 
                         {{ formview.select({
@@ -107,7 +104,15 @@
                         {% endfor %}
 
                         {{ formview.input({'label': '3D','name': 'frm_3ds','value': old('frm_3ds') ? old('frm_3ds') : app_obj.popup_3ds , 'errors': errors}) }}
-                        {{ formview.input({'label': 'Video URL','name': 'frm_videourl','value': old('frm_videourl') ? old('frm_videourl') : app_obj.video_url , 'errors': errors, 'type' : 'file', 'input_class': 'non-control', 'help': app_obj.video_url != '0' ? app_obj.video_url : ''}) }}
+                        {# Thay đổi type từ 'file' thành 'text' #}
+{{ formview.input({
+    'label': 'Video URL',
+    'name': 'frm_videourl',
+    'value': old('frm_videourl') ? old('frm_videourl') : app_obj.video_url, 
+    'errors': errors, 
+    'type' : 'text', 
+    'placeholder': 'Dán link video tại đây (Youtube, Video...)'
+}) }}
                         {{ formview.button_switch({'label': 'Hiện thị','name': 'frm_is_show','value': app_obj.is_show|default(0) , 'id': 'is_show', 'errors': errors}) }}
                         <button class="btn-info btn btn-sm d-none" type="button" onclick="add_image();">
                             <i class="fa fa-plus-circle mr-1" aria-hidden="true"></i>

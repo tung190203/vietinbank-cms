@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 Route::middleware(['auth'])->prefix('dashboard')->group(function () {
 
     Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('home_admin');
@@ -45,7 +46,7 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         // Route::get('group/{groupslug}/area/{areaslug}', function($groupslug,$areaslug){
         //     return [$groupslug,$areaslug];
         // })->name('admin_hhhh');
-        Route::get('group/{groupslug}/area/{areaslug}', [App\Http\Controllers\Admin\VrpopupController::class, 'index_filter'])->name('admin_vrpopup_filter');
+        Route::get('group/{groupslug}/area/{areaslug?}', [App\Http\Controllers\Admin\VrpopupController::class, 'index_filter'])->name('admin_vrpopup_filter');
     });
     Route::prefix('vr_popup_group')->group(function () {
         route_creator(App\Http\Controllers\Admin\VrpopupgroupController::class,'vr_popup_group');
@@ -54,14 +55,64 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     Route::prefix('guestbook')->group(function () {
         route_creator(App\Http\Controllers\Admin\GuestBookController::class,'guestbook');
     });
-    
+
     Route::get('/videos', function () {
         $videos = Storage::disk('public')->files('videos');
         return view('admin.videos.index', compact('videos'));
     })->name('videos');
+
+    Route::post('/videos/upload', function (Request $request) {
+        if (!$request->hasFile('video')) {
+            return response()->json(['error' => 'Không tìm thấy file video'], 400);
+        }
+
+        $file = $request->file('video');
+
+        // 1. Lấy tên gốc của file (bao gồm cả đuôi extension, ví dụ: "video nha mau_sanh chinh.mp4")
+        $originalNameWithExt = $file->getClientOriginalName();
+
+        // 2. Tách tên và đuôi file để làm sạch (tránh lỗi font chữ tiếng Việt/khoảng trắng trên URL)
+        $filenameOnly = pathinfo($originalNameWithExt, PATHINFO_FILENAME);
+        $extension = $file->getClientOriginalExtension();
+
+        // Làm sạch tên: "video nha mau_sanh chinh" -> "video-nha-mau-sanh-chinh"
+        $cleanFilename = Str::slug($filenameOnly);
+
+        // Nối lại đuôi file thành: "video-nha-mau-sanh-chinh.mp4"
+        $finalFilename = $cleanFilename . '.' . $extension;
+
+        // Trường hợp trùng tên file đã tồn tại trong thư mục, tự động chèn thêm timestamp để tránh ghi đè
+        if (Storage::disk('public')->exists('videos/' . $finalFilename)) {
+            $finalFilename = $cleanFilename . '-' . time() . '.' . $extension;
+        }
+
+        // 3. Sử dụng storeAs để lưu chính xác với tên chúng ta cấu hình
+        $path = $file->storeAs('videos', $finalFilename, 'public');
+        $filename = basename($path);
+
+        return response()->json([
+            'success' => true,
+            'filename' => $filename,
+            'url' => '/storage/videos/' . $filename
+        ]);
+    })->name('videos.upload');
+
     Route::delete('/videos/{filename}', function ($filename) {
-        Storage::disk('public')->delete('videos/' . $filename);
-        return redirect()->route('videos')->with('success', '�0�3�0�0 x��a video th��nh c�0�0ng!');
+        $disk = Storage::disk('public');
+        $filePath = 'videos/' . $filename;
+        clearstatcache(true, $disk->path($filePath));
+        if (!$disk->exists($filePath)) {
+            return redirect()->route('videos')->with('error', 'Video không tồn tại hoặc đã bị xóa trước đó!');
+        }
+        try {
+            $fullPath = $disk->path($filePath);
+            if (file_exists($fullPath)) {
+                @unlink($fullPath);
+            }
+            return redirect()->route('videos')->with('success', 'Đã xóa video thành công!');
+        } catch (\Exception $e) {
+            return redirect()->route('videos')->with('error', 'Hệ thống đang xử lý luồng file video này. Vui lòng đợi 3-5 giây và thử lại!');
+        }
     })->name('videos.delete');
     // ======================================================== END
     

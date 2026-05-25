@@ -53,7 +53,7 @@ class LoginController extends Controller
 
         $username = $request->get('username');
         $password = $request->get('password');
-        $remember = (boolean)$request->get('remember');
+        $remember = (bool)$request->get('remember');
 
         $user = User::where('username', $username)->first();
 
@@ -69,5 +69,14 @@ class LoginController extends Controller
         } else {
             return redirect()->route('login')->withInput()->withErrors(['username' => 'Tài khoản không tồn tại']);
         }
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

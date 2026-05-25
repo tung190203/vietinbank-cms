@@ -49,10 +49,23 @@
                         class="form-horizontal" id="formDataGrid">
                     {{ csrf_field() }}
                     <div class="card-body">
-                        
                         {{ formview.input({'label': 'Tên nhóm nội dung','name': 'frm_name','value': old('frm_name') ? old('frm_name') : app_obj.name , 'errors': errors}) }}
-                        {{ formview.input({'label': 'Slug','name': 'frm_slug','value': old('frm_slug') ? old('frm_slug') : app_obj.slug , 'errors': errors}) }}
-                        
+                        {# 1. Tạo danh sách option trước #}
+{% set area_options = "" %}
+{% for area in list_areas %}
+    {% set selected = (old('frm_vr_area_id') == area.id or app_obj.vr_area_id == area.id) ? 'selected="selected"' : '' %}
+    {% set area_options = area_options ~ '<option value="' ~ area.id ~ '" ' ~ selected ~ '>' ~ area.name ~ '</option>' %}
+{% endfor %}
+
+{# 2. Gọi macro select #}
+{{ formview.select({
+    'label': 'Thuộc khu vực',
+    'name': 'frm_vr_area_id',
+    'options': area_options,
+    'text_root': '-- Chọn khu vực --',
+    'value_root': '',
+    'errors': errors
+}) }}
                     </div>
                 </form>
             </div>

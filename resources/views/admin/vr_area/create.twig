@@ -24,7 +24,14 @@
     <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('backend_assets/js/globals.js') }}"></script>
     <script>CKFinder.config({connectorPath: '/ckfinder/connector'});</script>
-
+    {% if session_has('success') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Thành công!</strong> {{ session_get('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
     <hr class="mt-0">
     <section class="content">
         <div class="container-fluid">
@@ -51,14 +58,6 @@
                     <div class="card-body">
                         
                         {{ formview.input({'label': 'Tên khu vực','name': 'frm_name','value': old('frm_name') ? old('frm_name') : app_obj.name , 'errors': errors}) }}
-                        {{ formview.input({'label': 'Slug','name': 'frm_slug','value': old('frm_slug') ? old('frm_slug') : app_obj.slug , 'errors': errors}) }}
-                        {{ formview.select({
-                            'label': 'Danh mục cha',
-                            'name': 'frm_parent_id',
-                            'text_root': '__---__',
-                            'options': list_area, 
-                            'errors': errors
-                        }) }}
                     </div>
                 </form>
             </div>
