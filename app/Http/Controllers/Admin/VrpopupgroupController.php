@@ -10,7 +10,8 @@ class VrpopupgroupController extends BaseController
     public function __construct(Vrpopupgroup $app_obj)
     {
         parent::__construct($app_obj);
-        // $this->paginate = 120;
+        $this->grid_no_checkbox = true;
+        $this->grid_no_order = true;
         $this->export_fields = [
             //array_key => filed_name
             "list" => [

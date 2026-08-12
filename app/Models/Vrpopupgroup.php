@@ -85,6 +85,14 @@ class Vrpopupgroup extends BaseModel
             }
         });
     }
+
+      public static function makeOptionColumnButton($object_name)
+    {
+        $buttons = parent::makeOptionColumnButton($object_name);
+        unset($buttons['clone']);
+        unset($buttons['delete']);
+        return $buttons;
+    }
     public function area()
     {
         // popup_group belongsTo Vrarea thông qua khóa ngoại vr_area_id

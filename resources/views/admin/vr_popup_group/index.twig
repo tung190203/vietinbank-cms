@@ -28,10 +28,10 @@
                         {{ button.button_save() }}
                         
                          
-                         {{ button.button_create({'link': route(button_create_route,{'p_id' : object.product.p_id})}) }}
+                         {# {{ button.button_create({'link': route(button_create_route,{'p_id' : object.product.p_id})}) }}
                         {% if filter.state != 2 %}
                             {{ button.button_delete_checkbox({'link': route(button_delete_checkbox_route )}) }}
-                        {% endif %}    
+                        {% endif %}     #}
 
 
                         {{ button.button_back() }}

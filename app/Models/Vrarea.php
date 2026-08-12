@@ -60,6 +60,8 @@ class Vrarea extends BaseModel
     public static function makeOptionColumnButton($object_name)
     {
         $buttons = parent::makeOptionColumnButton($object_name);
+        unset($buttons['clone']);
+        unset($buttons['delete']);
         $buttons['view'] = [
             'route' => 'admin_vrpopup_filter',
             'params' => function($id) {

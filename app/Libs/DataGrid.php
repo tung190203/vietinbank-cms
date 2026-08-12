@@ -507,13 +507,15 @@ class DataGrid
         $html .= '<thead><tr>';
         if (is_array($this->columns)) {
             $number == true ? $html .= '<th width="1% " class="' . $this->header_class . '"></th>' : '';
-            $html .=
-                "<th width = '1%' class=\"$this->header_class\">" .
-                "<div class='icheck-primary'>" .
-                "<input type='checkbox' class='checkall' id='id_checkbox'>" .
-                "<label for='id_checkbox'></label>" .
-                "</div>" .
-                "</th>";
+            if ($this->has_check_box) {
+                $html .=
+                    "<th width='1%' class=\"$this->header_class\">" .
+                    "<div class='icheck-primary'>" .
+                    "<input type='checkbox' class='checkall' id='id_checkbox'>" .
+                    "<label for='id_checkbox'></label>" .
+                    "</div>" .
+                    "</th>";
+            }
 
             foreach ($this->columns as $key => $column) {
                 if ($column['col_type'] != "hidden") {
