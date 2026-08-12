@@ -8,9 +8,15 @@ use App\Models\Vrarea;
 
 class VrareaController extends BaseController
 {
+    protected $casts = [
+        'media_index' => 'array',
+        'skin_label' => 'array',
+    ];
     public function __construct(Vrarea $app_obj)
     {
         parent::__construct($app_obj);
+        $this->grid_no_checkbox = true;
+        $this->grid_no_order = true;
         $this->export_fields = [
             "list" => [
                 'id'            => 'id',

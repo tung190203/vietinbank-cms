@@ -19,33 +19,15 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         Route::get('delete/{id}', [$class_controller, 'delete'])->name('admin_'.$object_name.'_delete');
         Route::get('clone/{app_obj}', [$class_controller, 'clone'])->name('admin_'.$object_name.'_clone');
         Route::post('delete-check-box', [$class_controller, 'deleteCheckBox'])->name('admin_'.$object_name.'_delete_checkbox');
-
-        // Route::get('p/{p_id?}', [$class_controller, 'index'])->name('admin_'.$object_name.'_all')->defaults('p_id', '1');
-        // Route::get('create/p/{p_id?}', [$class_controller, 'edit1'])->name('admin_'.$object_name.'_create_all');
     }   
 
     // -------------------------------------------------------------
-
-    Route::prefix('product')->group(function () {
-        route_creator(App\Http\Controllers\Admin\ProductController::class,'product');
-    });
-    Route::prefix('product_category')->group(function () {
-        route_creator(App\Http\Controllers\Admin\ProductcategoryController::class,'product_category');
-    });
-
-    Route::prefix('game')->group(function () {
-        Route::get('/', [App\Http\Controllers\Admin\GameController::class, 'index'])->name('admin_game');
-        Route::get('reward/{gift_id?}', [App\Http\Controllers\Admin\GameController::class, 'show_reward'])->name('admin_game_reward');
-    });
 
     Route::prefix('vr_area')->group(function () {
         route_creator(App\Http\Controllers\Admin\VrareaController::class,'vr_area');
     });
     Route::prefix('vr_popup')->group(function () {
         route_creator(App\Http\Controllers\Admin\VrpopupController::class,'vr_popup');
-        // Route::get('group/{groupslug}/area/{areaslug}', function($groupslug,$areaslug){
-        //     return [$groupslug,$areaslug];
-        // })->name('admin_hhhh');
         Route::get('group/{groupslug}/area/{areaslug?}', [App\Http\Controllers\Admin\VrpopupController::class, 'index_filter'])->name('admin_vrpopup_filter');
     });
     Route::prefix('vr_popup_group')->group(function () {

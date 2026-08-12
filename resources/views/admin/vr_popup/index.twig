@@ -24,12 +24,12 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12 row justify-content-between">
-                    <div class="col-12 col-md-auto mb-3 row no-gutters-- gap--2 g--1" id='filter_object'>
-                        <div class="col-12 col-md-4">
+                <div class="col-12 row d-flex justify-content-center">
+                    <div class="col-12 mb-3 row no-gutters-- gap--2 g--1" id='filter_object'>
+                        <div class="col-12 col-md-3">
                             {{ formview.input({'placeholder': 'Tìm kiếm','name': 'search_txt'}) }}
                         </div>
-                        <div class="col-12 col-md-4">
+                        <div class="col-12 col-md-3">
                             {{ formview.select({
                                 'label': 'Khu vực',
                                 'name': 'filter_vr_area',
@@ -38,7 +38,7 @@
                                 'errors': errors
                             }) }}
                         </div>
-                        <div class="col-12 col-md-4">
+                        <div class="col-12 col-md-3">
                              {{ formview.select({
                                 'label': 'Nhóm',
                                 'name': 'filter_vr_group',
@@ -47,18 +47,16 @@
                                 'errors': errors
                             }) }}
                         </div>
+                        <div class="col-12 col-md-3 float-right">
+                            <div class="float-right mb-3">
+                                {{ button.button_save() }}
+                                {{ button.button_create({'link': route(button_create_route,{'p_id' : object.product.p_id})}) }}
+                                {% if filter.state != 2 %}
+                                    {{ button.button_delete_checkbox({'link': route(button_delete_checkbox_route )}) }}
+                                {% endif %}
+                                {{ button.button_back() }}
+                            </div>
                     </div>
-                    <div class="col-12 col-md-auto text--right mb-3">
-                        {{ button.button_save() }}
-                        
-                         
-                         {{ button.button_create({'link': route(button_create_route,{'p_id' : object.product.p_id})}) }}
-                        {% if filter.state != 2 %}
-                            {{ button.button_delete_checkbox({'link': route(button_delete_checkbox_route )}) }}
-                        {% endif %}    
-
-
-                        {{ button.button_back() }}
                     </div>
                 </div>
             </div>

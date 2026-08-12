@@ -39,20 +39,20 @@ Route::group(['prefix' => 'ajax'], function () {
 //    Route::post('/reset-password', 'Member\ForgotPasswordController@sendMailReset')->name('member_reset_password');
 //});
 
-Route::get('/', 'HomeController@index')->name('home_page');
-Route::get('/home', 'HomeController@index');
-Route::get('/sitemap.xml', 'HomeController@siteMap')->name('site_map');
-Route::match(['get', 'post'], '/contact', 'HomeController@contact')->name('contact');
-Route::get('/search', 'HomeController@search')->name('search');
-Route::post('/request-for-quote', 'HomeController@requestForQuote')->name('request_for_quote');
-//Route::get('test-send-mail', 'HomeController@testSendMail');
-//Route::get('/page/{slug}.html', 'HomeController@page')->where(['slug' => '[a-z0-9\-]+'])->name('page_content');
+// Route::get('/', 'HomeController@index')->name('home_page');
+// Route::get('/home', 'HomeController@index');
+// Route::get('/sitemap.xml', 'HomeController@siteMap')->name('site_map');
+// Route::match(['get', 'post'], '/contact', 'HomeController@contact')->name('contact');
+// Route::get('/search', 'HomeController@search')->name('search');
+// Route::post('/request-for-quote', 'HomeController@requestForQuote')->name('request_for_quote');
+// //Route::get('test-send-mail', 'HomeController@testSendMail');
+// //Route::get('/page/{slug}.html', 'HomeController@page')->where(['slug' => '[a-z0-9\-]+'])->name('page_content');
 
-Route::get('tat-ca-bai-viet', 'PostController@index')->name('all_post');
-Route::get('{slug}', 'SlugController@index')->where(['slug' => '[a-z0-9\-]+'])->name('category');
-Route::get('{slug}-{id}.html', 'PostController@detail')->where(['slug' => '[a-z0-9\-]+', 'id' => '[0-9]+'])->name('post_detail');
-Route::get('/service/{slug}-{id}.html', 'ServiceController@detail')->where(['slug' => '[a-z0-9\-]+', 'id' => '[0-9]+'])->name('service_detail');
-Route::get('/service/{slug}', 'ServiceController@categoryDetail')->where(['slug' => '[a-z0-9\-]+'])->name('category_service_detail');
+// Route::get('tat-ca-bai-viet', 'PostController@index')->name('all_post');
+// Route::get('{slug}', 'SlugController@index')->where(['slug' => '[a-z0-9\-]+'])->name('category');
+// Route::get('{slug}-{id}.html', 'PostController@detail')->where(['slug' => '[a-z0-9\-]+', 'id' => '[0-9]+'])->name('post_detail');
+// Route::get('/service/{slug}-{id}.html', 'ServiceController@detail')->where(['slug' => '[a-z0-9\-]+', 'id' => '[0-9]+'])->name('service_detail');
+// Route::get('/service/{slug}', 'ServiceController@categoryDetail')->where(['slug' => '[a-z0-9\-]+'])->name('category_service_detail');
 
-Route::get('/recruitment/{slug}-{id}.html', 'RecruitmentController@detail')->where(['slug' => '[a-z0-9\-]+', 'id' => '[0-9]+'])->name('recruitment_detail');
-Route::post('/recruitment/application', 'RecruitmentController@application')->name('application');
+// Route::get('/recruitment/{slug}-{id}.html', 'RecruitmentController@detail')->where(['slug' => '[a-z0-9\-]+', 'id' => '[0-9]+'])->name('recruitment_detail');
+// Route::post('/recruitment/application', 'RecruitmentController@application')->name('application');

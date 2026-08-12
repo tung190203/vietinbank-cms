@@ -78,6 +78,9 @@ class BaseController extends Controller
         ##############################################################################################
         ############# =========> COLUMN
         ##############################################################################################
+        if (isset($this->grid_no_checkbox) && $this->grid_no_checkbox) {
+            $clsDataGrid->has_check_box = false;
+        }
         if(!isset($this->grid_no_order) || !$this->grid_no_order){
             $clsDataGrid->addColumnText("order_no", "Sắp xếp", "width='3%' align='center'");
         }
