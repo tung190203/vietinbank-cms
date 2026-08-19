@@ -64,12 +64,13 @@ class Vrpopup extends BaseModel
         $html_form_fields = [
             'frm_name' => [
                 'validate' => 'required|string',
-                'db_field_name' => 'name'
+                'db_field_name' => 'name',
+                'validate_unique' => '|unique:vr_popups,name,',
             ],
             'frm_slug' => [
                 'validate' => 'required|string', // Gộp chung vào đây
                 'db_field_name' => 'slug',
-                'validate_unique' => '|unique:vr_areas,slug,',
+                'validate_unique' => '|unique:vr_popups,slug,',
             ],
             'frm_description' => [
                 'validate' => 'string|nullable',

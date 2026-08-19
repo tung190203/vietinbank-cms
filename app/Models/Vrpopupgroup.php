@@ -51,11 +51,13 @@ class Vrpopupgroup extends BaseModel
         $html_form_fields = [
             'frm_name' => [
                 'validate' => 'required|string',
-                'db_field_name' => 'name'
+                'db_field_name' => 'name',
+                'validate_unique' => '|unique:vr_popup_groups,name,',
             ],
             'frm_slug' => [
                 'validate' => 'required|string',
-                'db_field_name' => 'slug'
+                'db_field_name' => 'slug',
+                'validate_unique' => '|unique:vr_popup_groups,slug,',
             ],
             'frm_vr_area_id' => [
                 'db_field_name' => 'vr_area_id',
